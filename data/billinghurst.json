@@ -1,0 +1,32 @@
+{
+"1st": {
+  "title": "1st Year",
+  "classes": []
+},
+"2nd": {
+  "title": "2nd Year",
+  "classes": [
+    {
+        "id": "2nd-1",
+        "title": "Past simple",
+        "file": "past_simple.html"
+    }
+]
+},
+"3rd": {
+  "title": "3rd Year",
+  "classes": []
+},
+"4th": {
+  "title": "4th Year",
+  "classes": []
+},
+"5th": {
+  "title": "5th Year",
+  "classes": []
+},
+"6th": {
+  "title": "6th Year",
+  "classes": []
+}
+}

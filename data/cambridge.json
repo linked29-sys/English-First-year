@@ -1,0 +1,32 @@
+{
+  "A1": {
+    "title": "Level A1 - Elementary",
+    "classes": []
+  },
+  "A2": {
+    "title": "Level A2 - Elementary",
+    "classes": [
+      {
+        "id": "a2-1",
+        "title": "Describir personas",
+        "file": "teorica1.html"
+      }
+    ]
+  },
+  "B1": {
+  "title": "Level B1 - Intermediate",
+  "classes": []
+},
+"B2": {
+  "title": "Level B2 - Upper Intermediate",
+  "classes": []
+},
+"C1": {
+  "title": "Level C1 - Advanced",
+  "classes": []
+},
+"C2": {
+  "title": "Level C2 - Proficient",
+  "classes": []
+}
+}
