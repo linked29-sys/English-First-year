@@ -1,8 +1,44 @@
 <!DOCTYPE html>
 <html lang="en-GB">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="stylesheet" href="styles.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Poner nombre a la pagina</title>
+        <!--Main styles-->
+        <link rel="stylesheet" href="./assets/css/main.css">
+        <!--Responsive styles-->
+        <link rel="stylesheet" href="./assets/css/responsive.css">
+    </head>
+    <body>
+        <main>
+            <!--Section with the modules to choose-->
+            <section id="choose-module">
+                <h2>Choose a module to start</h2>
+                <ul>
+                    <!--Module list-->
+                    <li class="module" id="module-billinghurst">
+                        <h4>Instituto billinghurst</h4>
+                        <img src="./assets/img/logos/example.webp" alt="">
+                    </li>
+                    <li class="module" id="module-cambridge" href="./cambridge/course.html">
+                        <h4>Cambridge</h4>
+                        <img src="./assets/img/logos/example.webp" alt="" class="logo">
+                    </li>
+                </ul>
+            </section>
+            <section id="choose-grade">
+                <h2>Choose a grade to start</h2>
+                <ul id="grades-list">
+                    <!--Grades list-->
+                </ul>
+            </section>
+            <section id="choose-class">
+                <h2>Choose a class to start</h2>
+                <ul id="classes-list">
+                    <!--classes list-->
+                </ul>
+            </section>
+        </main>
+    </body>
+    <script src="./assets/js/index.js"></script>
 </html>

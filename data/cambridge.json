@@ -1,10 +1,12 @@
-{
-  "A1": {
+[
+  {
     "title": "Level A1 - Elementary",
+    "id": "A1",
     "classes": []
   },
-  "A2": {
+  {
     "title": "Level A2 - Elementary",
+    "id": "A2",
     "classes": [
       {
         "id": "a2-1",
@@ -13,20 +15,24 @@
       }
     ]
   },
-  "B1": {
+  {
   "title": "Level B1 - Intermediate",
+  "id": "B1",
   "classes": []
-},
-"B2": {
-  "title": "Level B2 - Upper Intermediate",
-  "classes": []
-},
-"C1": {
-  "title": "Level C1 - Advanced",
-  "classes": []
-},
-"C2": {
-  "title": "Level C2 - Proficient",
-  "classes": []
-}
-}
+  },
+  {
+    "title": "Level B2 - Upper Intermediate",
+    "id": "B2",
+    "classes": []
+  },
+  {
+    "title": "Level C1 - Advanced",
+    "id": "C1",
+    "classes": []
+  },
+  {
+    "title": "Level C2 - Proficient",
+    "id": "C2",
+    "classes": []
+  }
+]
