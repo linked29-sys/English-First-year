@@ -1,38 +1,38 @@
 [
   {
-    "title": "Level A1 - Elementary",
-    "id": "A1",
+    "title": "Elementary",
+    "id": "a1",
+    "logo": "A1",
     "classes": []
   },
   {
-    "title": "Level A2 - Elementary",
-    "id": "A2",
-    "classes": [
-      {
-        "id": "a2-1",
-        "title": "Describir personas",
-        "file": "teorica1.html"
-      }
-    ]
+    "title": "Elementary",
+    "id": "a2",
+    "logo": "A2",
+    "classes": []
   },
   {
-  "title": "Level B1 - Intermediate",
-  "id": "B1",
+  "title": "Intermediate",
+  "id": "a1",
+  "logo": "B1",
   "classes": []
   },
   {
-    "title": "Level B2 - Upper Intermediate",
-    "id": "B2",
+    "title": "Upper Intermediate",
+    "id": "a2",
+    "logo": "B1+",
     "classes": []
   },
   {
-    "title": "Level C1 - Advanced",
-    "id": "C1",
+    "title": "Advanced",
+    "id": "a1",
+    "logo": "C1",
     "classes": []
   },
   {
-    "title": "Level C2 - Proficient",
-    "id": "C2",
+    "title": "Proficient",
+    "id": "a2",
+    "logo": "C2",
     "classes": []
   }
 ]

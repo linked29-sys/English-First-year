@@ -51,8 +51,16 @@ const setGradesList = async () => {
         gradeItem.setAttribute("id", `grade-${grade.id.toLowerCase()}`);
         const gradeName = grade.title;
         gradeItem.innerHTML = `
-            <h4>${gradeName}</h4>
-            <img src="./assets/img/logos/example.webp" alt="">
+            <div class="back"></div>
+            <div class="title-grade">
+                <span>${grade.logo}</span>
+                <h4>${grade.title}</h4>
+            </div>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae dicta qui quibusdam modi voluptate iste, amet facere. Illo consectetur quis excepturi, consequuntur deleniti obcaecati error? Odio repellat quae tempora quo.</p>
+            <div class="grade-details">
+                <span>${grade.classes.length}</span>
+                <p>Available classes</p>
+            </div>
         `;
         gradesList.appendChild(gradeItem);
         setGradeNavigation(gradeItem);
@@ -99,6 +107,11 @@ const classesList = document.getElementById("classes-list");
 //Function to charge Classes' list with available classes
 const setClassesList = async () => {
     const classes = await getClasses();
+    if (classes.length == 0) {
+        const classItem = document.createElement("p");
+        classItem.innerHTML = "There is no available classes. Try again later."
+        classesList.appendChild(classItem)
+    } 
     classes.forEach((aClass) => {
         const classItem = document.createElement("li");
         classItem.classList.add("class");
@@ -106,13 +119,33 @@ const setClassesList = async () => {
         const className = aClass.title;
         classItem.innerHTML = `
             <a href="./${selectedModuleName}/${selectedGrade}/${aClass.file}">
-                <h4>${className}</h4>
-                <img src="./assets/img/logos/example.webp" alt="">
+                <div class="info-class">
+                    <i class="fi ${typeOfClassIcon(aClass.typeOfClass)}"></i>
+                    <div>
+                        <h4>${aClass.title}</h3>
+                        <p>${aClass.description}</p>
+                    </div>
+                </div>
             </a>
         `;
         classesList.appendChild(classItem);
     });
 };
+
+//Function to get the class icon with the class type.
+const typeOfClassIcon = (typeOfClass) => {
+    switch (typeOfClass) {
+  case "grammar":
+    return "fi-rr-text-check";
+  case "time":
+    return "fi-rr-clock";
+  case "vocabulary":
+    return "fi-rr-dictionary-alt";
+  default:
+    //Declaraciones ejecutadas cuando ninguno de los valores coincide con el valor de la expresión
+    return fi-rr-english;
+}
+}
 
 //Function to get classes of a selected grade
 const getClasses = async () => {

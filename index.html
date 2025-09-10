@@ -6,34 +6,38 @@
         <title>Poner nombre a la pagina</title>
         <!--Main styles-->
         <link rel="stylesheet" href="./assets/css/main.css">
+        <!--Own styles-->
+        <link rel="stylesheet" href="./assets/css/index.css">
         <!--Responsive styles-->
         <link rel="stylesheet" href="./assets/css/responsive.css">
+        <!--Flat icons-->
+        <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
     </head>
     <body>
         <main>
             <!--Section with the modules to choose-->
-            <section id="choose-module">
-                <h2>Choose a module to start</h2>
+            <section class="choosing" id="choose-module">
+                <h2>Select your academia</h2>
                 <ul>
                     <!--Module list-->
                     <li class="module" id="module-billinghurst">
-                        <h4>Instituto billinghurst</h4>
-                        <img src="./assets/img/logos/example.webp" alt="">
+                        <img src="./assets/img/logos/example.webp" class="logo" alt="">
+                        <h4 class="title-mod">Instituto</h4>
                     </li>
                     <li class="module" id="module-cambridge" href="./cambridge/course.html">
-                        <h4>Cambridge</h4>
-                        <img src="./assets/img/logos/example.webp" alt="" class="logo">
+                        <img src="./assets/img/logos/cambridge-logo.png" alt="" class="logo">
+                        <h4 id="title-camb" class="title-mod">Cambridge</h4>
                     </li>
                 </ul>
             </section>
-            <section id="choose-grade">
-                <h2>Choose a grade to start</h2>
+            <section class="choosing" id="choose-grade">
+                <h2>Select your actual level</h2>
                 <ul id="grades-list">
                     <!--Grades list-->
                 </ul>
             </section>
-            <section id="choose-class">
-                <h2>Choose a class to start</h2>
+            <section class="choosing" id="choose-class">
+                <h2>Available classes</h2>
                 <ul id="classes-list">
                     <!--classes list-->
                 </ul>

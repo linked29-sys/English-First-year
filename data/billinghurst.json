@@ -1,38 +1,46 @@
 [
   {
-    "title": "1st Year",
+    "title": "First year",
     "id": "1st",
+    "logo": "1",
     "classes": []
   },
   {
-    "title": "2nd Year",
+    "title": "Second year",
     "id": "2nd",
+    "logo": "2",
     "classes": [
       {
           "id": "2nd-1",
           "title": "Past simple",
-          "file": "past_simple.html"
+          "file": "past_simple.html",
+          "description": "Welcome to the interactive course on the Past Simple tense. Learn to form and use this verb tense through explanations, examples, and interactive exercises.",
+          "typeOfClass": "vocabulary"
       }
   ]
   },
   {
-    "title": "3rd Year",
+    "title": "Third year",
     "id": "3rd",
+    "logo": "3",
     "classes": []
   },
   {
-    "title": "4th Year",
+    "title": "Fourth year",
     "id": "4th",
+    "logo": "4",
     "classes": []
   },
   {
-    "title": "5th Year",
+    "title": "Fifth year",
     "id": "5th",
+    "logo": "5",
     "classes": []
   },
   {
-    "title": "6th Year",
+    "title": "Sixth year",
     "id": "6th",
+    "logo": "6",
     "classes": []
   }
 ]
