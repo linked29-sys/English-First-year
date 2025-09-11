@@ -47,19 +47,21 @@ const setGradesList = async () => {
     const grades = await getGrades();
     grades.forEach((grade) => {
         const gradeItem = document.createElement("li");
-        gradeItem.classList.add("grade");
+        gradeItem.classList.add("p-3");
         gradeItem.setAttribute("id", `grade-${grade.id.toLowerCase()}`);
         const gradeName = grade.title;
         gradeItem.innerHTML = `
-            <div class="back"></div>
-            <div class="title-grade">
-                <span>${grade.logo}</span>
-                <h4>${grade.title}</h4>
-            </div>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae dicta qui quibusdam modi voluptate iste, amet facere. Illo consectetur quis excepturi, consequuntur deleniti obcaecati error? Odio repellat quae tempora quo.</p>
-            <div class="grade-details">
-                <span>${grade.classes.length}</span>
-                <p>Available classes</p>
+            <div class="grade bg-white p-3 rounded-3">
+                    <div class="back rounded-3"></div>
+                <div class="title-grade gap-2 mt-2 mb-2 d-flex align-items-center">
+                    <span class="rounded-3 text-white p-2 fs-4">${grade.logo}</span>
+                    <h4>${grade.title}</h4>
+                </div>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae dicta qui quibusdam modi voluptate iste, amet facere. Illo consectetur quis excepturi, consequuntur deleniti obcaecati error? Odio repellat quae tempora quo.</p>
+                <div class="grade-details d-flex flex-row gap-2 border-top">
+                    <span>${grade.classes.length}</span>
+                    <p>Available classes</p>
+                </div>
             </div>
         `;
         gradesList.appendChild(gradeItem);
@@ -114,16 +116,16 @@ const setClassesList = async () => {
     } 
     classes.forEach((aClass) => {
         const classItem = document.createElement("li");
-        classItem.classList.add("class");
+        classItem.classList.add("class", "d-flex", "align-items-center", "rounded-3", "p-3");
         classItem.setAttribute("id", `class-${aClass.id.toLowerCase()}`);
         const className = aClass.title;
         classItem.innerHTML = `
             <a href="./${selectedModuleName}/${selectedGrade}/${aClass.file}">
-                <div class="info-class">
+                <div class="info-class d-flex flex-row gap-3 p-3 rounded-3 bg-white">
                     <i class="fi ${typeOfClassIcon(aClass.typeOfClass)}"></i>
-                    <div>
-                        <h4>${aClass.title}</h3>
-                        <p>${aClass.description}</p>
+                    <div class="d-flex gap-2 flex-column">
+                        <h4 class="fs-5 m-0">${aClass.title}</h3>
+                        <p class="text-black m-0">${aClass.description}</p>
                     </div>
                 </div>
             </a>
