@@ -1,6 +1,19 @@
-
+import { saveUserSelection, loadUserSelection } from "./localStorage.js";
 
 let modules = [];
+const { module, grade } = loadUserSelection();
+const gradesList = document.getElementById("grades-list");
+const classesList = document.getElementById("classes-list");
+//data
+let selectedGrade = grade ? grade : "";
+let selectedModuleName = module ? module : "";
+//Sections
+const moduleSection = document.getElementById("choose-module");
+const gradesSection = document.getElementById("choose-grade");
+const dashboard = document.getElementById("dashboard");
+//buttons
+const logout = document.getElementById("logout")
+
 
 //Function to get all modules
 const getModules = () => {
@@ -12,44 +25,40 @@ const setModuleNavigation = () => {
     getModules();
     modules.forEach((module) => {
         module.addEventListener("click", (e) => {
-            showGrades(e);
+            showSelectedGrades(e);
         });
     })
 };
 
+//Function to show actual selected module's grades
 
-const gradesSection = document.getElementById("choose-grade");
-
-let selectedModuleName = "";
-
-//Function to show module's grades
-
-const showGrades = (e) => {
+const showSelectedGrades = (e) => {
     e.preventDefault();
     selectedModuleName = e.currentTarget.getAttribute("id").split("-")[1];
-    hideModules();
-    gradesSection.style.display = "block";
-    setGradesList(selectedModuleName);
+    removeModulesSectionVisibility();
+    addGradesSectionVisibility();
+    setGradesList();
 };
 
-const moduleSection = document.getElementById("choose-module");
-
-//Function to hide modules
-const hideModules = () => {
-    moduleSection.style.display = "none";
+//Function to hide modules section
+const  removeModulesSectionVisibility = () => {
+    moduleSection.classList.add("d-none");
 };
 
-const gradesList = document.getElementById("grades-list");
+//Function to show grades section
+const  addGradesSectionVisibility = () => {
+    gradesSection.classList.remove("d-none")
+};
 
 //Function to charge grade's list with available grades
 
 const setGradesList = async () => {
+    cleanGradesList();
     const grades = await getGrades();
     grades.forEach((grade) => {
         const gradeItem = document.createElement("li");
         gradeItem.classList.add("p-3");
         gradeItem.setAttribute("id", `grade-${grade.id.toLowerCase()}`);
-        const gradeName = grade.title;
         gradeItem.innerHTML = `
             <div class="grade bg-white p-3 rounded-3">
                     <div class="back rounded-3"></div>
@@ -67,6 +76,11 @@ const setGradesList = async () => {
         gradesList.appendChild(gradeItem);
         setGradeNavigation(gradeItem);
     });
+};
+
+//Function to remove previous charged classes
+const cleanGradesList = () => {
+    gradesList.innerHTML = ""
 };
 
 //Function to show available grades
@@ -87,27 +101,32 @@ const getGrades = async () => {
 //Function to set navigation for grades
 const setGradeNavigation = (gradeItem) => {
     gradeItem.addEventListener("click", (e) => {
-        showClasses(e);
+        showDashboard(e);
     });
 }
 
-selectedGrade = "";
-
-const classesSection = document.getElementById("choose-class");
-
-//Function to show classes of a selected grade
-const showClasses = (e) => {
+//Function to show dashboard of selected grade
+const showDashboard = (e) => {
     e.preventDefault();
     selectedGrade = e.currentTarget.getAttribute("id").split("-")[1];
     setClassesList();
-    classesSection.style.display = "block";
-    hideGrades();
+    addDashboardVisibility();
+    removeGradesSectionVisibility();
+    saveUserSelection(selectedModuleName, selectedGrade);
 }
 
-const classesList = document.getElementById("classes-list");
+//Function to hide grades element
+const removeGradesSectionVisibility = () => {
+    gradesSection.classList.add("d-none");
+}
+
+const addDashboardVisibility = () => {
+    dashboard.classList.remove("d-none");
+}
 
 //Function to charge Classes' list with available classes
 const setClassesList = async () => {
+    cleanClassesList();
     const classes = await getClasses();
     if (classes.length == 0) {
         const classItem = document.createElement("p");
@@ -134,6 +153,11 @@ const setClassesList = async () => {
     });
 };
 
+//Function to remove previous charged classes
+const cleanClassesList = () => {
+    classesList.innerHTML = ""
+};
+
 //Function to get the class icon with the class type.
 const typeOfClassIcon = (typeOfClass) => {
     switch (typeOfClass) {
@@ -157,38 +181,57 @@ const getClasses = async () => {
     return classes;
 }
 
+//Function to show previous selected module's grades
+const loadGrades = () => {
+    if (selectedModuleName) {
+        removeModulesSectionVisibility();
+        addGradesSectionVisibility();
+        setGradesList();
+    }
+    return;
+}
 
-//Function to hide grades
-const hideGrades = () => {
-    gradesList.innerHTML = "";
-    gradesSection.style.display = "none";
+//Function to show previous selected grade's classes
+const loadDashboard = async () => {
+    if (selectedGrade) {
+        removeGradesSectionVisibility();
+        addDashboardVisibility();
+        await setClassesList();
+    }
+    return;
+}
+
+//Function to show charged profile
+
+const loadProfile = () => {
+    loadGrades();
+    loadDashboard();
+}
+
+const deleteActualSesion = () => {
+    saveUserSelection("", "")
+    reloadPage();
+}
+
+const setDashboardNavButtons = () => {
+    logout.addEventListener("click", deleteActualSesion);
+}
+
+const reloadPage = () => {
+    addModulesSectionVisibility();
+    removeDashboardVisibility();
+}
+
+const addModulesSectionVisibility = () => {
+    moduleSection.classList.remove("d-none")
+}
+
+const removeDashboardVisibility = () => {
+    dashboard.classList.add("d-none")
 }
 
 //Initial state
-hideGrades();
-
-//Function to show modules again
-const showModules = () => {
-    moduleSection.style.display = "block";
-    hideGrades();
-};
-
-//Function to go back to grades    
-const backToGrades = (e) => {
-    e.preventDefault();
-    gradesSection.style.display = "block";
-    setGradesList(selectedModuleName);
-    hideClasses();
-}
-
-//Function to hide classes
-const hideClasses = () => { 
-    classesList.innerHTML = "";
-    classesSection.style.display = "none";
-}
-
-//Initial state
-hideClasses();
-
+loadProfile();
 setModuleNavigation();
+setDashboardNavButtons();
 

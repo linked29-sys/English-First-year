@@ -45,6 +45,10 @@
   font-style: normal;
 }
 
+#choose-class{
+    background-color: #f4f4f4;
+}
+
 .grade-details span {
     color: #0055A4;
     font-weight: 600;
@@ -112,3 +116,20 @@
     transition: all 0.3s ease;
 }
 
+.button-icon img {
+    width: 32px;
+    height: 32px;
+}
+
+.button-icon span{
+    color: #bdc6cf;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.button-icon{
+    cursor: pointer;
+}
+
+.button-icon:hover{
+}

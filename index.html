@@ -13,6 +13,7 @@
         <!--Responsive styles-->
         <link rel="stylesheet" href="./assets/css/responsive.css">
         <!--Flat icons-->
+        <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
         <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
     </head>
     <body>
@@ -23,28 +24,69 @@
                 <ul class="d-flex m-4 justify-content-center gap-5 p-0">
                     <!--Module list-->
                     <li class="module p-3 rounded-3 position-relative" id="module-billinghurst">
-                        <img src="./assets/img/logos/example.webp" class="" alt="">
+                        <img src="./assets/img/logos/example.webp" class="img-fluid" alt="">
                         <h4 class="mt-3 fs-4 text-center">Instituto</h4>
                     </li>
                     <li class="module p-3 rounded-3 position-relative" id="module-cambridge" href="./cambridge/course.html">
-                        <img src="./assets/img/logos/cambridge-logo.png" alt="" class="logo">
+                        <img src="./assets/img/logos/cambridge-logo.png" alt="" class="img-fluid">
                         <h4 id="title-camb" class="title-mod mt-3 fs-4 text-center text-black">Cambridge</h4>
                     </li>
                 </ul>
             </section>
-            <section class="choosing container p-3" id="choose-grade">
+
+            <section class="choosing container p-3 d-none" id="choose-grade">
                 <h2>Select your actual level</h2>
                 <ul id="grades-list" class="m-4 row row-cols-3 p-0 justify-content-center">
                     <!--Grades list-->
                 </ul>
             </section>
-            <section class="choosing container p-3" id="choose-class">
-                <h2>Available classes</h2>
-                <ul id="classes-list" class="m-4 row row-cols-2 p-0 justify-content-center">
-                    <!--classes list-->
-                </ul>
-            </section>
+            
+            <div class="container-fluid row d-none p-0 m-0" id="dashboard">
+                <!--Aside nav-->
+                <div class="position-fixed top-0 start-0 vh-100 col-2 container-fluid bg-white d-flex flex-column gap-5 p-3 border-end">
+                    <div class="title-grade gap-3 mt-2 mb-2 d-flex flex-column align-items-center">
+                        <span class="rounded-circle text-white ps-4 pe-4 pt-2 pb-2 fs-4">1</span>
+                        <h4 class="fs-5">First year</h4>
+                    </div>
+                    <!--Buttons-->
+                    <div class="d-flex flex-column gap-4 align-items-center">
+                        <div class="button-icon d-flex flex-column gap-2" id="classes">
+                            <img src="./assets/img/interface-icon/task-checklist.png" alt="" class="mx-auto d-block">
+                            <span class="text-center">Classes</span>
+                        </div>
+                        <div class="button-icon d-flex flex-column gap-2" id="material">
+                            <img src="./assets/img/interface-icon/folder-open.png" alt="" class="mx-auto d-block">
+                            <span class="text-center">Material</span>
+                        </div>   
+                        <div class="button-icon d-flex flex-column gap-2" id="phonetics">
+                            <img src="./assets/img/interface-icon/user-speaking.png" alt="" class="mx-auto d-block">
+                            <span class="text-center">Phonetics</span>
+                        </div>
+                        <div class="button-icon d-flex flex-column gap-2" id="phonetics">
+                            <img src="./assets/img/interface-icon/faq.png" alt="" class="mx-auto d-block">
+                            <span class="text-center">FAQ</span>
+                        </div>
+                        <div class="button-icon d-flex flex-column gap-2" id="logout">
+                            <img src="./assets/img/interface-icon/user-logout.png" alt="" class="mx-auto d-block">
+                            <span class="text-center">Log out</span>
+                        </div>
+                    </div>
+                </div>
+                <!--Content-->
+                <div id="content" class="container-fluid col-10 p-0 offset-2">
+                    <div class="bg-white container-fluid border-bottom d-flex flex-column gap-4 p-3 ps-5 pe-5">
+                        <h1 class="text-center">Classes of first year for billinghurst</h1>
+                        <h2>Available classes</h2>
+                    </div>
+                    <!--classes-->
+                    <section class="choosing container-fluid" id="choose-class">
+                        <ul id="classes-list" class="ms-4 me-4 row row-cols-2 p-0 justify-content-start">
+                            <!--classes list-->
+                        </ul>
+                    </section>
+                </div>
+            </div>
         </main>
     </body>
-    <script src="./assets/js/index.js"></script>
+    <script type="module" src="./assets/js/index.js"></script>
 </html>
