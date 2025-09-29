@@ -1,0 +1,44 @@
+[
+  {
+    "title": "First year",
+    "id": "1st",
+    "logo": "1",
+    "gradeColor": "#5DADE2",
+    "playlistId": "PLpLaqjI39e188ZJWBRxl7g9LqPA3hZAro"
+  },
+  {
+    "title": "Second year",
+    "id": "2nd",
+    "logo": "2",
+    "gradeColor": "#3498DB",
+    "playlistId": "PLpLaqjI39e19mK4BQnOH8IXvnMVU4Fd4a"
+  },
+  {
+    "title": "Third year",
+    "id": "3rd",
+    "logo": "3",
+    "gradeColor": "#2E86C1",
+    "playlistId": ""
+  },
+  {
+    "title": "Fourth year",
+    "id": "4th",
+    "logo": "4",
+    "gradeColor": "#2874A6",
+    "playlistId": ""
+  },
+  {
+    "title": "Fifth year",
+    "id": "5th",
+    "logo": "5",
+    "gradeColor": "#1B4F72",
+    "playlistId": "PLpLaqjI39e1-vNb6RjRZBu7IysfTI4kAz"
+  },
+  {
+    "title": "Sixth year",
+    "id": "6th",
+    "logo": "6",
+    "gradeColor": "#0B3C5D",
+    "playlistId": ""
+  }
+]

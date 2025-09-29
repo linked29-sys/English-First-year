@@ -1,0 +1,537 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+:root {
+  --primary-color: #0055A4;
+  --secondary-color: #fff
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    unicode-bidi: isolate;
+    color: var(--primary-color);
+}
+
+p {
+    unicode-bidi: isolate;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1 {
+  font-size: 2em;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5em;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.25em;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.125em;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+h5 {
+  font-size: 1em;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+h6 {
+  font-size: 0.875em;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+
+#choose-module ul li {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden; 
+}   
+
+#choose-module ul li::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.125), #ffffff);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+#choose-module {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+#choose-module ul #module-billinghurst:hover {
+    border: 2px solid #0055A4;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    scale: 1.05;
+    transition: all 0.3s ease;
+}
+
+#choose-module ul #module-cambridge:hover {
+    border: 2px solid #ee3d34;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    scale: 1.05;
+    transition: all 0.3s ease;
+}
+
+#choose-module ul li:hover::before {
+    content: none;
+}
+
+#title-camb{
+    font-family: 'trajan-pro-bold';
+}
+
+@font-face {
+  font-family: 'trajan-pro-bold';
+  src: url("../fonts/trajan-pro-bold.ttf") format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#choose-class{
+    background-color: #f4f4f4;
+}
+
+.grade-details span {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.grade-details {
+    font-size: 0.9rem;
+}
+
+.grade{
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.grade:hover{
+    background-color: #0055A410 !important;
+    scale: 1.05;
+    transition: all 0.3s ease;
+}
+
+
+.grade .back {
+    /*revisar*/
+    min-height: 150px;
+}
+
+.grade-logo #grade-circle{ 
+    width: 75px;
+    height: 75px; 
+    background-color: var(--primary-color) ;
+}
+
+#grade-text{ 
+    color: var(--primary-color) ;
+}
+
+#grade-circle img {
+    width: 24px;
+    height: 24px;
+}
+
+.info-class i{
+    height: fit-content;
+    padding: 8px 16px;
+    color: #ffffff;
+    font-size: 2rem;
+    border-radius: 50px;
+    background-color: var(--primary-color);
+}
+
+.info-class h4 {
+    white-space: nowrap;
+}
+
+.info-class p {
+    font-size: 0.9rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-class {
+    cursor: pointer;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.info-class:hover {
+    background-color: rgb(from var(--secondary-color) r g b / 10%) !important;
+    transition: all 0.3s ease;
+}
+
+.button-icon svg {
+    margin: 0 auto;
+    color: #bdc6cf;
+    width: 32px;
+    height: 32px;
+}
+
+.button-active > * {
+    color: var(--primary-color) !important;
+}
+
+.button-icon:hover svg, .button-icon:hover span{
+    color: rgb(from var(--secondary-color) r g b / 100%);
+    transition: all 0.3s ease;
+}
+
+#lateral-nav {
+    width: 112px;
+    padding: 16px;
+    min-height: 100%;
+}
+
+#content {
+    width: calc(100% - 112px);
+    margin-left: 112px !important;
+}
+
+.button-icon span{
+    color: #bdc6cf;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.button-icon{
+    cursor: pointer;
+}
+
+
+
+.lesson-info {
+    background-color: var(--primary-color);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.lesson-info h1, .lesson-info p {
+    color: white;
+    text-align: center;
+}
+
+.lesson-module {
+    border-color: var(--primary-color) !important;
+}
+
+.lesson-theory b {
+    color: var(--primary-color);
+}
+
+.lesson-theory i {
+    color: var(--primary-color);
+}
+
+.lesson-theory .Tip {
+    color: black;
+    font-weight: 600;
+}
+
+.lesson-theory li {
+    margin-bottom: 0.5rem;
+    margin-left: 2.5rem;
+    list-style-type: disc;
+}
+
+.lesson-theory strong {
+    color: black;
+    font-weight: 600;
+}
+
+.example {
+    background-color: #e6f2ff;
+}
+
+.lesson-theory th {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.lesson-theory table {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.is-valid {
+  border-color: #198754 !important;
+  background-color: #d1e7dd !important;
+}
+
+.is-invalid {
+  border-color: #dc3545 !important;
+  background-color: #f8d7da !important;
+}
+
+.vid-data img{
+    width: 120px;
+}
+
+.playlist-vid:hover {
+    background-color: rgb(from var(--secondary-color) r g b / 10%);
+    transition: all 0.3s ease;
+}
+
+.selected-vid{
+    background-color: rgb(from var(--secondary-color) r g b / 25%) !important;
+}
+
+.vid-data img{
+    border-radius: 16px 16px 16px 16px;
+}
+
+.vid-data span {
+    font-size: medium;
+    font-weight: 600;
+}
+
+.vid-data .index {
+    font-size:smaller !important;
+    font-weight: 500 !important;
+}
+
+.playlist {
+    overflow-y: scroll;
+}
+
+
+.container-playlist i {
+    height: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    min-height: 100%;
+    padding: 8px 8px;
+}
+
+.offcanvas-title span{
+    font-size: smaller;
+}
+
+.playlist-trigger{
+    color: var(--primary-color);
+}
+
+
+.button{
+    box-shadow: 0 0px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    background-color: white;
+    color: #bdc6cf;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: smaller;
+    transition: all 0.3s ease;
+}
+
+.button-secondary{
+    box-shadow: 0 0px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    background-color: rgb(from var(--secondary-color) r g b / 100%);
+    color: #bdc6cf;
+    border-radius: 50px;
+    color: white !important;
+    font-weight: 600;
+    font-size: smaller;
+    transition: all 0.3s ease;
+}
+
+.button-secondary:hover {
+    transition: all 0.3s ease;
+    background-color: rgb(from var(--secondary-color) r g b / 75%);
+}
+
+.button-secondary:active {
+    background-color: rgb(from var(--secondary-color) r g b / 50%);
+    scale: 1.05;
+    transition: all 0.1s ease;
+}
+
+.button-primary{
+    box-shadow: 0 0px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    background-color: rgb(from var(--primary-color) r g b / 100%);
+    color: #bdc6cf;
+    border-radius: 50px;
+    color: white !important;
+    font-weight: 600;
+    font-size: smaller;
+    transition: all 0.3s ease;
+}
+
+.button-primary:hover {
+    transition: all 0.3s ease;
+    background-color: rgb(from var(--primary-color) r g b / 75%);
+}
+
+.button-primary:active {
+    background-color: rgb(from var(--primary-color) r g b / 50%);
+    scale: 1.05;
+    transition: all 0.1s ease;
+}
+
+.button:hover {
+    transition: all 0.3s ease;
+    color: var(--secondary-color) !important;
+}
+
+.button:active {
+    color: var(--primary-color) !important;
+    scale: 1.1;
+    transition: all 0.1s ease;
+    border: 1px solid var(--primary-color);
+}
+
+.button-dark{
+    box-shadow: 0 0px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background-color: rgb(0, 0, 0);
+    color: #ffffff;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: smaller;
+}
+
+.button-dark:hover {
+    transition: all 0.3s ease;
+    background-color: #181717f6 !important;
+}
+
+.button-dark:active {
+    background-color: #181717da !important;
+    scale: 1.1;
+    transition: all 0.1s ease;
+}
+
+.vid-author a{
+    font-size: medium;
+    font-weight: 600;
+    color: black;
+}
+
+.vid-author span {
+    font-size: smaller;
+}
+
+.author-image {
+    cursor: pointer;
+    width: 40px;
+}
+
+.offcanvas-header p{
+    line-height: 8px;
+} 
+
+.question {
+    cursor: pointer;
+    border: 1px solid var(--secondary-color) ;
+}
+
+.question-head svg {
+    width: 32px;
+    height: 32px;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.question:hover svg {
+    scale: 1.5;
+    transition: all 0.3s ease;
+    background-color: rgb(from var(--secondary-color) r g b / 25%);
+    border-radius: 100%;
+}
+
+#contact-info > div >     svg {
+    color: var(--primary-color);
+}
+
+#contact-info > div{
+    border: 1px solid var(--secondary-color);
+}
+
+#contact-form input {
+    width: 100%;
+}
+
+#contact svg {
+    color: var(--primary-color);
+}
+
+.contact-data span {
+    color: rgb(145, 143, 143);
+    font-size: small;
+}
+
+.contact-data p{
+    line-height: 0px;
+}
+
+#contact-form {
+    box-shadow: 0 0 16px rgba(0,0,0,0.1);
+}
+
+#contact-form input {
+    border: none;
+    background-color: #f5f5f5;
+    border-radius: inherit;
+}
+
+#contact-form textarea {
+    border: none;
+    background-color: #f5f5f5;
+    border-radius: inherit;
+}
+
+#contact-form select {
+    border: none;
+    background-color: #f5f5f5;
+    border-radius: inherit;
+}
+
+#lesson-container #to-top{
+    width: fit-content;
+}
+
+.w-fit{
+    width: fit-content;
+}

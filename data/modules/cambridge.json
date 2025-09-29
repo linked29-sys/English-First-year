@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Elementary",
+    "id": "a1",
+    "logo": "A1",
+    "gradeColor": "#FF8F85",
+    "playlistId": ""
+  },
+  {
+    "title": "Elementary",
+    "id": "a2",
+    "logo": "A2",
+    "gradeColor": "#EC7063",
+    "playlistId": ""
+  },
+  {
+    "title": "Intermediate",
+    "id": "b1",
+    "logo": "B1",
+    "gradeColor": "#CD6155",
+    "playlistId": ""
+  },
+  {
+    "title": "Upper Intermediate",
+    "id": "b1+",
+    "logo": "B1+",
+    "gradeColor": "#A93226",
+    "playlistId": ""
+  },
+  {
+    "title": "Advanced",
+    "id": "c1",
+    "logo": "C1",
+    "gradeColor": "#922B21",
+    "playlistId": ""
+  },
+  {
+    "title": "Proficient",
+    "id": "c2",
+    "logo": "C2",
+    "gradeColor": "#78281F",
+    "playlistId": ""
+  }
+]

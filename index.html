@@ -3,15 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Poner nombre a la pagina</title>
+        <title>EnglishBoard</title>
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-        <!--Main styles-->
-        <link rel="stylesheet" href="./assets/css/main.css">
         <!--Own styles-->
-        <link rel="stylesheet" href="./assets/css/index.css">
+        <link rel="stylesheet" href="./assets/css/index-09112025.css">
         <!--Responsive styles-->
         <link rel="stylesheet" href="./assets/css/responsive.css">
+        <!--Animation styles-->
+        <link rel="stylesheet" href="./assets/css/animation.css">
         <!--Flat icons-->
         <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
         <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
@@ -41,52 +41,253 @@
                 </ul>
             </section>
             
-            <div class="container-fluid row d-none p-0 m-0" id="dashboard">
+            <section class="container-fluid px-0 mx-0 d-none" id="dashboard"> <!--p-0 m-0-->
                 <!--Aside nav-->
-                <div class="position-fixed top-0 start-0 vh-100 col-2 container-fluid bg-white d-flex flex-column gap-5 p-3 border-end">
-                    <div class="title-grade gap-3 mt-2 mb-2 d-flex flex-column align-items-center">
-                        <span class="rounded-circle text-white ps-4 pe-4 pt-2 pb-2 fs-4">1</span>
-                        <h4 class="fs-5">First year</h4>
+                <div class="bg-white fixed-top d-flex flex-column border-end" id="lateral-nav" w-25> <!--p-0 m-0-->
+                    <div class="grade-logo d-flex flex-column align-items-center">
+                        <div class="rounded-circle text-white d-flex flex-column justify-content-center align-items-center" id="grade-circle">
+                            <img src="./assets/img/interface-icon/student-alt.png" alt="">
+                            <span class="fw-bold fs-5 text-capitalize"></span>
+                        </div>
+                        <div class="d-flex flex-column text-center fw-bold" id="grade-text"><!--p-0-->
+                            <span class="fs-5" id="grade-type"></span>
+                            <span id="grade-institute" class="text-capitalize"></span>
+                        </div>
                     </div>
                     <!--Buttons-->
-                    <div class="d-flex flex-column gap-4 align-items-center">
-                        <div class="button-icon d-flex flex-column gap-2" id="classes">
-                            <img src="./assets/img/interface-icon/task-checklist.png" alt="" class="mx-auto d-block">
-                            <span class="text-center">Classes</span>
-                        </div>
-                        <div class="button-icon d-flex flex-column gap-2" id="material">
-                            <img src="./assets/img/interface-icon/folder-open.png" alt="" class="mx-auto d-block">
-                            <span class="text-center">Material</span>
-                        </div>   
-                        <div class="button-icon d-flex flex-column gap-2" id="phonetics">
-                            <img src="./assets/img/interface-icon/user-speaking.png" alt="" class="mx-auto d-block">
-                            <span class="text-center">Phonetics</span>
-                        </div>
-                        <div class="button-icon d-flex flex-column gap-2" id="phonetics">
-                            <img src="./assets/img/interface-icon/faq.png" alt="" class="mx-auto d-block">
-                            <span class="text-center">FAQ</span>
-                        </div>
-                        <div class="button-icon d-flex flex-column gap-2" id="logout">
-                            <img src="./assets/img/interface-icon/user-logout.png" alt="" class="mx-auto d-block">
-                            <span class="text-center">Log out</span>
-                        </div>
+                    <div class="flex-grow-1 d-flex flex-column gap-4 justify-content-center" id="buttons-nav"> <!--p-0 m-0-->
+                        <!--buttons-->
                     </div>
                 </div>
                 <!--Content-->
-                <div id="content" class="container-fluid col-10 p-0 offset-2">
-                    <div class="bg-white container-fluid border-bottom d-flex flex-column gap-4 p-3 ps-5 pe-5">
-                        <h1 class="text-center">Classes of first year for billinghurst</h1>
-                        <h2>Available classes</h2>
-                    </div>
-                    <!--classes-->
-                    <section class="choosing container-fluid" id="choose-class">
-                        <ul id="classes-list" class="ms-4 me-4 row row-cols-2 p-0 justify-content-start">
-                            <!--classes list-->
+                <div id="content" class="container-fluid mx-0 px-0"> <!--p-0 m-0-->
+                    <!--lessons content-->
+                    <div class="dashboard-content container-fluid" id="content-lessons">
+                        <h1 class="p-5 fs-1">Available Lessons</h1>
+                        <ul id="lessons-list" class="ms-4 me-4 row row-cols-2 p-0 justify-content-start">
+                            <!--lessons list-->
                         </ul>
-                    </section>
+                    </div>
+                    <!--Material content-->
+                    <div class="dashboard-content container-fluid vh-100 overflow-hidden" id="content-material">
+                        <div class="material-offcanva offcanvas offcanvas-end container-playlist m-0 p-0 w-auto" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+                            <div class="offcanvas-header">
+                                <div id="staticBackdropLabel">
+                                    <h3 class="playlist-title"></h3>
+                                    <p class="mb-2"><span class="author-title"></span><span class="text-secondary"> - </span><span class="current-vid text-secondary"></span><span class="lenght-playlist text-secondary"></span></p>
+                                </div>
+                                <button type="button" class="btn-close d-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body border-top bg-white d-flex flex-column align-items-center m-0 p-0">
+                                <ul class="playlist p-0 m-0 d-flex flex-column" id="material-vids">
+                                    <!-- Videos list -->
+                                </ul>   
+                            </div>
+                        </div>
+                        <div>
+                            <!-- Player principal -->
+                            <div class="d-flex flex-row">
+                                <div class="p-5 d-flex flex-column align-items-center pb-4 position-relative col-11">
+                                    <div class="ratio ratio-16x9 w-100" style="max-width: 800px;">
+                                        <iframe class="rounded-3" 
+                                                id="material-player" 
+                                                src=""
+                                                allowfullscreen></iframe>
+                                    </div>
+                                    <div class="mt-3 w-100 d-flex flex-row align-items-center justify-content-between" style="max-width: 800px;" id="material-info-vid">
+                                        <div class="d-flex flex-column gap-4">
+                                            <h3 class="text-start m-0"></h3>
+                                            <div class="d-flex flex-row align-items-center gap-3">
+                                                <a href=""><img class="author-image rounded-circle" src="" alt=""></a>
+                                                <div class="d-flex flex-column vid-author">
+                                                    <a href=""></a>
+                                                    <span></span>
+                                                </div>
+                                                <div class="button-dark rounded-pill px-3 p-2 subscribe">
+                                                    <span>Subscribe</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row gap-3 nav-vid">
+                                            <div class="button p-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                    fill="currentColor" class="bi bi-skip-start" viewBox="0 0 16 16">
+                                                    <path d="M4 4a.5.5 0 0 1 1 0v3.248l6.267-3.636c.52-.302 
+                                                            1.233.043 1.233.696v7.384c0 .653-.713.998-1.233.696L5 8.752V12a.5.5 0 0 1-1 0zm7.5.633L5.696 8l5.804 3.367z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="button p-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                    fill="currentColor" class="bi bi-skip-end" viewBox="0 0 16 16">
+                                                    <path d="M12.5 4a.5.5 0 0 0-1 0v3.248L5.233 3.612C4.713 3.31 
+                                                            4 3.655 4 4.308v7.384c0 .653.713.998 1.233.696L11.5 
+                                                            8.752V12a.5.5 0 0 0 1 0zM5 4.633 10.804 8 5 11.367z"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-1 playlist-trigger justify-content-center d-flex flex-column text-center" id="material-trigger">
+                                    <i class="fs-3 fi fi-rr-angle-double-left"></i>
+                                    <p class="fs-5">Playlist</p>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <!--Phonetics content-->
+                    <div class="dashboard-content container-fluid vh-100 overflow-hidden" id="content-phonetics">
+                        <div class="phonetics-offcanva offcanvas offcanvas-end container-playlist m-0 p-0 w-auto" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+                            <div class="offcanvas-header">
+                                <div id="staticBackdropLabel">
+                                    <h3 class="playlist-title"></h3>
+                                    <p class="mb-2"><span class="author-title"></span><span class="text-secondary"> - </span><span class="current-vid text-secondary"></span><span class="lenght-playlist text-secondary"></span></p>
+                                </div>
+                                <button type="button" class="btn-close d-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body border-top bg-white d-flex flex-column align-items-center m-0 p-0">
+                                <ul class="playlist p-0 m-0 d-flex flex-column" id="phonetics-vids">
+                                    <!-- Videos list -->
+                                </ul>   
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-flex flex-row">
+                                <!-- Player principal -->
+                                <div class="p-5 col-11 d-flex flex-column align-items-center pb-4">
+                                    <div class="ratio ratio-16x9 w-100" style="max-width: 800px;">
+                                        <iframe class="rounded-3" 
+                                                id="phonetics-player" 
+                                                src=""
+                                                allowfullscreen></iframe>
+                                    </div>
+                                    <div class="mt-3 w-100 d-flex flex-row align-items-center justify-content-between" style="max-width: 800px;" id="phonetics-info-vid">
+                                        <div class="d-flex flex-column gap-4">
+                                            <h3 class="text-start m-0"></h3>
+                                            <div class="d-flex flex-row align-items-center gap-3">
+                                                <a href=""><img class="author-image rounded-circle" src="" alt=""></a>
+                                                <div class="d-flex flex-column vid-author">
+                                                    <a href=""></a>
+                                                    <span></span>
+                                                </div>
+                                                <div class="button-dark rounded-pill px-3 p-2 subscribe">
+                                                    <span>Subscribe</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row gap-3 nav-vid">
+                                            <div class="button p-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                    fill="currentColor" class="bi bi-skip-start" viewBox="0 0 16 16">
+                                                    <path d="M4 4a.5.5 0 0 1 1 0v3.248l6.267-3.636c.52-.302 
+                                                            1.233.043 1.233.696v7.384c0 .653-.713.998-1.233.696L5 8.752V12a.5.5 0 0 1-1 0zm7.5.633L5.696 8l5.804 3.367z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="button p-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                    fill="currentColor" class="bi bi-skip-end" viewBox="0 0 16 16">
+                                                    <path d="M12.5 4a.5.5 0 0 0-1 0v3.248L5.233 3.612C4.713 3.31 
+                                                            4 3.655 4 4.308v7.384c0 .653.713.998 1.233.696L11.5 
+                                                            8.752V12a.5.5 0 0 0 1 0zM5 4.633 10.804 8 5 11.367z"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-1 playlist-trigger justify-content-center d-flex flex-column text-center" id="phonetics-trigger">
+                                    <i class="fs-3 fi fi-rr-angle-double-left"></i>
+                                    <p class="fs-5">Playlist</p>
+                                </div>  
+                            </div>
+                        </div> 
+                    </div>
+
+                    <!--FAQ content-->
+                    <div class="dashboard-content container-fluid m-0 vh-100" id="content-faq">
+                        <div class="d-flex flex-row row p-5" id="question">
+                            <h1 class="fs-1 col-12">Frequently asked questions</h1>
+                            <ul class="mt-5 d-flex flex-column gap-3 col-8" id="faq-list">
+                                <!--Question lists-->
+                            </ul>
+                            <div class="col-4 mt-5 d-flex flex-column" id="contact-info">
+                                    <div class="p-4 text-center rounded-3 bg-white">
+                                        <svg class="mb-4 mx-auto d-block" xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-chat-left-fill" viewBox="0 0 16 16">
+                                            <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                                        </svg>
+                                        <h3 class="mb-4">Do you have more questions?</h3>
+                                        <p class="mb-5">Do you still have a question we didn’t answer? Any suggestions or requests? Get in touch with us. Thank you for helping us improve.</p>
+                                        <div class="to-form mt-5 button-secondary d-flex flex-row justify-content-center gap-2 align-items-center p-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                                                <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
+                                            </svg>
+                                            <span>Shoot a direct email</span>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="d-none container-fluid d-flex p-5 vh-100" id="contact">
+                            <div class="col-6 pe-5">
+                                    <svg class="m-auto d-block" xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+                                        <path d="M16 8c0 3.866-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7M5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0m4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                                    </svg>
+                                    <h1 class="pe-5 mt-5 fs-1 ">Share Your Questions or Suggestions</h1>
+                                    <p class="pe-5 mt-3">Fill out the form and let us know how we can make your learning experience better.</p>
+                                    <div>
+                                        <div class="mt-5 contact-data d-flex flex-row gap-3 align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                                                <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
+                                            </svg>
+                                            <div class="d-flex flex-column gap-2">
+                                                <span>E-mail</span>
+                                                <p>englishboard9@gmail.com</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <form class="rounded-3 d-flex flex-column px-5 py-5 bg-white col-6" id="contact-form">
+                                <label for="name" class="form-label">Name</label>
+                                <input class="form-control mb-3" type="text" id="name" placeholder="Lionel Messi" name="name" required>
+
+                                <label class="form-label" for="email">Email</label>
+                                <input class="form-control mb-3" placeholder="lionelmessi@example.com" type="email" id="email" name="email">
+
+                                <label class="form-label" for="subject">Subject</label>
+                                <select class="form-select mb-3" id="subject" name="subject" required>
+                                    <option value="">Select...</option>
+                                    <option value="question">Question</option>
+                                    <option value="suggestion">Suggestion</option>
+                                    <option value="request">Request</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <input class="d-none form-control mb-3" placeholder="Place a subject" type="text" id="other-subject" name="other-subject">
+
+                                <label class="form-label" for="message">Message</label>
+                                <textarea placeholder="Type your message" class="form-control mb-3" id="message" name="message" rows="5" required></textarea>
+
+                                <div class="d-flex flex-row justify-content-between">
+                                    <div class=" w-25 button-secondary d-flex flex-row justify-content-center gap-2 align-items-center p-2" onclick="SubmitEvent" id="send-form">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-send-fill" viewBox="0 0 16 16">
+                                            <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
+                                        </svg>
+                                        <span>Send</span>
+                                    </div>
+                                    <div class="w-25 button-dark d-flex flex-row justify-content-center gap-2 align-items-center p-2" id="cancel-form">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                        </svg>
+                                        <span>Cancel</span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+            </section>
+            <!--container of lessons-->
+            <div id="lesson-container" class="d-none container-fluid p-0">
+                
             </div>
         </main>
     </body>
-    <script type="module" src="./assets/js/index.js"></script>
+    <script type="module" src="./assets/js/index-09112025.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
 </html>

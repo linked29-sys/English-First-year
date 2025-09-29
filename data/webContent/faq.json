@@ -1,0 +1,50 @@
+[
+  {
+    "questionId": "what-is-englishboard",
+    "title": "What is EnglishBoard?",
+    "answer": "EnglishBoard is a platform that allows Professor Gustavo Pistolesi’s students to access interactive lessons. It also provides study materials for each grade and phonetics course they are taking.",
+    "buttons": []
+  },
+  {
+    "questionId": "need-account",
+    "title": "Do I need to create an account?",
+    "answer": "No. The grade or course you select is saved in your browser, so you can automatically access it again when you reload or reopen the page.",
+    "buttons": []
+  },
+  {
+    "questionId": "choose-grade-course",
+    "title": "Can I choose a different grade or course?",
+    "answer": "Yes. You can log out and select any grade or course as many times as you like.",
+    "buttons": []
+  },
+  {
+    "questionId": "how-lessons-work",
+    "title": "How do the lessons work?",
+    "answer": "Lessons are divided into modules. Each module covers a specific topic and includes practice exercises related to it.",
+    "buttons": []
+  },
+  {
+    "questionId": "lesson-exercises",
+    "title": "What happens with the lesson exercises?",
+    "answer": "Exercises are corrected once you press Finish, but your results are not saved when you exit the lesson. You will not receive a grade based on your performance. The exercises are only meant as a personal tool to check your understanding of the topic.",
+    "buttons": []
+  },
+  {
+    "questionId": "no-lessons-videos",
+    "title": "Why don’t I see any lessons and/or videos available?",
+    "answer": "This may be due to several reasons, which will be specified on the page when the error occurs. In any case, please wait a few minutes. If the problem persists, contact us using the following form:",
+    "buttons": ["Contact form"]
+  },
+  {
+    "questionId": "upload-frequency",
+    "title": "How often are lessons and/or videos uploaded?",
+    "answer": "Lessons and videos are uploaded by the professor, so it may take some time before new material is added to the virtual classroom.",
+    "buttons": []
+  },
+  {
+    "questionId": "share-suggestion",
+    "title": "I have a suggestion for the page. Where can I share it?",
+    "answer": "We are always happy to hear new ideas from our users. You can share your suggestions through the following form:",
+    "buttons": ["Suggestion form"]
+  }
+]

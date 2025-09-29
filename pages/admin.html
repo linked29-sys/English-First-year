@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Poner nombre a la pagina</title>
+        <!--Bootstrap-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <!--Main styles-->
+        <link rel="stylesheet" href="../assets/css/main-09112025.css">
+    </head>
+    <body>
+        <div class="container-fluid bg-primary d-flex justify-content-between align-items-center">
+            <button class="btn btn-warning m-3" id="back-button">Ir al inicio</button>
+            <div>
+                <button class="btn btn-light m-3" id="upload-lesson-button">Subir leccion</button>
+                <button class="btn btn-light m-3" id="get-lesson-button">Ver lecciones</button>
+                <button class="btn btn-light m-3" id="update-lesson-button">Actualizar leccion</button>
+                <button class="btn btn-light m-3" id="delete-lesson-button">eliminar leccion</button>
+            </div>
+        </div>
+        
+        <form id="Select-data" class="container w-25 mt-3 mb-3">
+                <div class="mb-3">
+                    <label for="lesson-institute" class="form-label text-primary fw-bold">Seleccionar cursada</label>
+                    <select class="form-select" id="lesson-institute" name="institute" required>
+                        <option value="" >Seleccionar un instituto</option>
+                        <option value="cambridge">Cambridge</option>
+                        <option value="billinghurst">Billinghurst</option>
+                    </select>
+                </div>
+                <div class="mb-3 d-none" id="grade-select-container">
+                    <label for="lesson-grade" class="form-label">Grado</label>
+                    <select class="form-select" id="lesson-grade" name="grade" required>
+                    </select>
+                </div>
+                <p class="mb-5" id="curse-explain"></p>
+                <div class="mb-3" id="container-type">
+                    <label for="lesson-type" class="form-label text-primary fw-bold">Seleccionar tipo de leccion</label>
+                    <select class="form-select" id="lesson-type" name="type" required>
+                        <option value="" >Seleccionar un tipo</option>
+                        <option value="grammar">grammar</option>
+                        <option value="vocabulary">vocabulary</option>
+                        <option value="time">time</option>
+                        <option value="listening">listening</option>
+                        <option value="reading">reading</option>
+                        <option value="writing">writing</option>
+                        <option value="speaking">speaking</option>
+                    </select>
+                </div>
+                <p id="type-explain"></p>
+        </form>
+
+        <section id="upload">
+            <h1 class="text-center p-3">Subir leccion</h1>
+            <form class="container d-flex flex-column gap-3" id="upload-lesson-form">
+                <div class="mb-3">
+                    <label for="jsonFile" class="form-label text-primary fw-bold">Colocar archivo JSON</label>
+                    <input type="file" id="jsonFile" accept=".json" class="form-control mb-3">
+                </div>
+                <div class="mb-3">
+                    <label for="jsonContent" class="form-label text-primary fw-bold">Contenido json</label>
+                    <p><i>Aca podes editar el contenido del json, aunque es recomendable hacerlo antes de colocarlo.</i></p>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item active w-25 border text-center"><b>Reglas</b></li>
+                        <li class="list-group-item active w-25 border"><b>1.</b> titulo de no mas de 200 caracteres</li>
+                        <li class="list-group-item active w-25 border"><b>2.</b> shortDescription de no mas de 300 caracteres</li>
+                    </ul>
+                    <textarea id="jsonContent" class="form-control" rows="10" placeholder='{}'></textarea>
+                </div>
+                <p>recordar seleccionar un grado antes de subir la leccion</p>
+                <button type="submit" class="btn btn-primary mb-3">Subir Leccion</button>
+            </form>
+        </section>
+
+        <section class="d-none" id="update">
+            <h1 class="text-center p-3">actualizar leccion</h1>
+            <div class="p-5">
+                <table class="table table-responsive bordered table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">_Id</th>
+                            <th scope="col">fecha</th>
+                            <th scope="col">ver clase</th>
+                            <th scope="col">titulo</th>
+                            <th scope="col">descripcion</th>
+                            <th scope="col">seleccion</th>
+                            <tbody id="table-update">
+                            </tbody>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="text-center mt-3">
+                <button class="btn btn-warning" id="update-lesson-btn">Actualizar lección</button>
+            </div>
+            <form class="container d-flex flex-column gap-3" id="update-lesson-form">
+                <div class="mb-3">
+                    <label for="jsonFile" class="form-label text-primary fw-bold">Colocar archivo JSON</label>
+                    <input type="file" id="jsonFileUpdate" accept=".json" class="form-control mb-3">
+                </div>
+                <div class="mb-3">
+                    <label for="jsonContent" class="form-label text-primary fw-bold">Contenido json</label>
+                    <p><i>Aca podes editar el contenido del json, aunque es recomendable hacerlo antes de colocarlo.</i></p>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item active w-25 border text-center"><b>Reglas</b></li>
+                        <li class="list-group-item active w-25 border"><b>1.</b> titulo de no mas de 200 caracteres</li>
+                        <li class="list-group-item active w-25 border"><b>2.</b> shortDescription de no mas de 300 caracteres</li>
+                    </ul>
+                    <textarea id="updateJsonContent" class="form-control" rows="10" placeholder='{}'></textarea>
+                </div>
+            </form>
+        </section>
+
+        <section class="d-none" id="get">
+            <h1 class="text-center p-3">lista de lecciones</h1>
+            <div class="p-5">
+                <table class="table table-responsive bordered table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">_Id</th>
+                            <th scope="col">fecha</th>
+                            <th scope="col">ver clase</th>
+                            <th scope="col">titulo</th>
+                            <th scope="col">descripcion</th>
+                            <tbody id="table-get">
+                            </tbody>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </section>
+        <section class="d-none" id="delete">
+            <h1 class="text-center p-3">borrar leccion</h1>
+            <div class="p-5">
+                <table class="table table-responsive bordered table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">_Id</th>
+                            <th scope="col">fecha</th>
+                            <th scope="col">ver clase</th>
+                            <th scope="col">titulo</th>
+                            <th scope="col">descripcion</th>
+                            <th scope="col">selecionado</th>
+                            <tbody id="table-delete">
+                            </tbody>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="text-center mt-3">
+                <button class="btn btn-danger" id="delete-lessons-btn">Eliminar lecciones seleccionadas</button>
+            </div>
+        </section>
+
+    </body>
+    <script>
+    const backUrl = "http://localhost:3000";
+    let actualSection = "upload"
+
+    const instituteSelect = document.getElementById('lesson-institute');
+    const gradeSelect = document.getElementById('lesson-grade');
+    const typeSelect = document.getElementById("lesson-type")
+
+    //container
+    const gradeSelectContainer = document.getElementById('grade-select-container');
+    const typeSelectContainer = document.getElementById("container-type")
+    //Forms
+    const uploadLessonForm = document.getElementById('upload-lesson-form');
+    //file inputs
+    const fileInput = document.getElementById("jsonFile");
+    const fileInputUpdate = document.getElementById("jsonFileUpdate");
+    //textareas
+    const textareaJson = document.getElementById("jsonContent");
+    const textareaUpdate = document.getElementById("updateJsonContent");
+
+    fileInputUpdate.addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                textareaUpdate.value = e.target.result;
+            };
+            reader.readAsText(file);
+        }
+    });
+
+    fileInput.addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                textareaJson.value = e.target.result;
+            };
+            reader.readAsText(file);
+        }
+    });
+
+    // Function to select the GradeId for the upload section
+    const setGradesOptionsByInstitute = () => {
+
+        gradeSelectContainer.classList.remove('d-none');
+        gradeSelect.innerHTML = '<option value="">Seleccionar un grado</option>';
+
+        if (!instituteSelect.value) {
+            gradeSelectContainer.classList.add('d-none');
+            return;
+        }
+
+        const selectedInstitute = instituteSelect.value;
+        const grades = selectedInstitute === 'cambridge'
+            ? ['a1', 'a2', 'b1', 'b1+', 'c1', 'c2']
+            : ['1st', '2nd', '3rd', '4th', '5th', '6th'];
+
+        grades.forEach(grade => {
+            const option = document.createElement('option');
+            option.value = grade.toLowerCase();
+            option.textContent = grade;
+            gradeSelect.appendChild(option);
+        });
+    };
+    
+
+    // Function to post a lesson into the backend
+    const postLessonData = async (event) => {
+        event.preventDefault();
+        try {
+            const grade = gradeSelect.value;
+            if (!grade) {
+                alert("Por favor selecciona un grado.");
+                return;
+            }
+
+            const type = typeSelect.value;
+            if (!type) {
+                alert("Por favor selecciona un tipo de leccion.");
+                return;
+            }
+
+            const jsonRaw = textareaJson.value.trim();
+            if (!jsonRaw) {
+                alert("El contenido JSON está vacío.");
+                return;
+            }
+
+            let json = JSON.parse(jsonRaw);
+            json.gradeId = grade;
+            json.type = type;
+
+            const response = await fetch(backUrl + "/lesson", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(json)
+            });
+
+            if (response.ok) {
+                alert('Lección subida con éxito.');
+                resetAllComponents();
+            } else {
+                const errorData = await response.json();
+                alert('Error al subir la lección: ' + (errorData.message || 'Error desconocido.'));
+            }
+
+        } catch (error) {
+            console.error('Error uploading lesson:', error);
+            alert('Ocurrió un error al subir la lección.');
+        }
+    };
+
+
+    const setNavigation = async () => {
+        const uploadButton = document.getElementById("upload-lesson-button");
+        const getButton = document.getElementById("get-lesson-button");
+        const updateButton = document.getElementById("update-lesson-button");
+        const deleteButton = document.getElementById("delete-lesson-button");
+
+        await uploadButton.addEventListener("click", () => {
+            setSection("upload")
+        });
+        await getButton.addEventListener("click", () => {
+            setSection("get")
+        });
+        await updateButton.addEventListener("click", () => {
+            setSection("update")
+        });
+        await deleteButton.addEventListener("click", () => {
+            setSection("delete")
+        });
+    }
+
+    const setSection = async (section) => {
+        const sections = document.querySelectorAll("section");
+        sections.forEach(element => element.classList.add("d-none"));
+        const typeExplain = document.getElementById("type-explain");
+        const curseExplain = document.getElementById("curse-explain");
+        resetAllComponents()
+        actualSection = section
+        switch (section) {
+            case "upload":
+                document.getElementById("upload").classList.remove("d-none");
+                typeSelectContainer.classList.remove("d-none")
+                curseExplain.innerHTML = "Los datos de la cursada indica donde va a aparecer la leccion"
+                typeExplain.innerHTML = "El tipo de leccion va a representar el icono que se va a mostrar"
+                return ;
+            case "get":
+                document.getElementById("get").classList.remove("d-none");
+                typeSelectContainer.classList.add("d-none")
+                await gradeSelect.addEventListener('change', fillTable)
+                curseExplain.innerHTML = "Los datos de la cursada funciona como filtro"
+                typeExplain.innerHTML = ""
+
+                return ;
+            case "update":
+                document.getElementById("update").classList.remove("d-none");
+                typeSelectContainer.classList.remove("d-none")
+                gradeSelect.addEventListener('change', fillTable)
+                curseExplain.innerHTML = "Los datos de la cursada funciona como filtro y donde va a aparecer la leccion actualizada"
+                typeExplain.innerHTML = "El tipo de leccion va a representar el icono de la leccion"
+                return ;
+            case "delete":
+                document.getElementById("delete").classList.remove("d-none");
+                typeSelectContainer.classList.add("d-none")
+                gradeSelect.addEventListener('change', fillTable)
+                curseExplain.innerHTML = "Los datos de la cursada funciona como filtro"
+                typeExplain.innerHTML = ""
+                return ;
+            default:
+                return ;
+            }
+    }
+
+    //fill the table of the actual section.
+    const fillTable = async () => {
+        if (!gradeSelect.value) {
+            return ;
+        }
+        const tableId = "table-" + actualSection
+        const table = document.getElementById(tableId)
+        const lessons = await getLessonsByGrade(gradeSelect.value)
+        table.innerHTML = `
+            ${lessons.map((lesson) => (
+                `<tr>${tableDateBySection(lesson)}</tr>`  
+            )).join('')}
+        ` 
+    }
+
+    //Return table row data depending on the actual section.
+    const tableDateBySection = (lesson) => {
+        content =  `<td>${lesson._id}</td>
+                    <td>${new Date(lesson.upload_date).toLocaleDateString()}</td>
+                    <td><button class="btn btn-primary">ver</button></td>
+                    <td>${lesson.title}</td>
+                    <td>${lesson.shortDescription}</td>
+                    `
+        if (actualSection === "delete") {
+            content += `<td><input type="checkbox" value="${lesson._id}"></td>`;
+        }
+        else if (actualSection === "update") {
+            content += `<td><input type="radio" name="selectedLesson" value="${lesson._id}"></td>`;
+        }
+        return content;
+    }
+
+    //get all lessons by grade
+    const getLessonsByGrade = async (gradeId) => {
+        try{
+            const response = await fetch(backUrl + "/lesson/grade/" + gradeId)
+            if (!response.ok) {
+                const errorData = await response.json();
+            }
+            const data = await response.json()
+            return data;
+        }
+        catch (error) {
+            console.error('Error uploading lesson:', error);
+            alert('Ocurrió un error al subir la lección.');
+        }
+    }
+    
+    // Update a selected lesson
+    const updateLesson = async () => {
+        const radios = document.querySelectorAll("#table-update input[type='radio']");
+        const selectedRadio = Array.from(radios).find(r => r.checked);
+
+        if (!selectedRadio) {
+            alert("Seleccioná una lección para actualizar.");
+            return;
+        }
+
+        const id = selectedRadio.value;
+        const textareaUpdate = document.getElementById("updateJsonContent");
+        const rawJson = textareaUpdate.value.trim();
+
+        if (!rawJson) {
+            alert("El contenido JSON está vacío.");
+            return;
+        }
+
+        const type = typeSelect.value;
+            if (!type) {
+                alert("Por favor selecciona un tipo de leccion.");
+                return;
+            }
+
+        const grade = gradeSelect.value;
+            if (!grade) {
+                alert("Por favor selecciona un grado.");
+                return;
+            }
+
+            let json = JSON.parse(rawJson);
+            json.gradeId = grade;
+            json.type = type;
+
+        let updatedJson;
+        try {
+            updatedJson = json;
+        } catch (err) {
+            alert("JSON inválido. Revisá la sintaxis.");
+            return;
+        }
+
+        try {
+            const res = await fetch(`${backUrl}/lesson/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedJson)
+            });
+
+            if (res.ok) {
+                alert("Lección actualizada correctamente.");
+                resetAllFilesInput()
+                resetAllTextareas()
+                fillTable();
+            } else {
+                const error = await res.json();
+                alert("Error: " + (error.message || "Error desconocido."));
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error en la actualización.");
+        }
+    };
+    
+    const loadSelectedLessonJson = async () => {
+        const radios = document.querySelectorAll("#table-update input[type='radio']");
+        const selectedRadio = Array.from(radios).find(r => r.checked);
+
+        if (!selectedRadio) {
+            alert("Seleccioná una lección para cargar.");
+            return;
+        }
+
+        const id = selectedRadio.value;
+
+        try {
+            const res = await fetch(`${backUrl}/lesson/${id}`);
+            if (!res.ok) {
+                throw new Error("No se pudo obtener la lección.");
+            }
+            const data = await res.json();
+
+            // Colocar el JSON en el textarea correspondiente
+            const textareaUpdate = document.getElementById("updateJsonContent");
+            textareaUpdate.value = JSON.stringify(data, null, 2);
+        } catch (err) {
+            console.error(err);
+            alert("Error al cargar la lección.");
+        }
+    };
+
+    const deleteSelectedLessons = async () => {
+        const checkboxes = document.querySelectorAll("#table-delete input[type='checkbox']");
+        const selectedIds = Array.from(checkboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+
+        if (selectedIds.length === 0) {
+            alert("Seleccioná al menos una lección para eliminar.");
+            return;
+        }
+
+        const confirmDelete = confirm(`¿Estás seguro de que querés borrar ${selectedIds.length} lección(es)?`);
+        if (!confirmDelete) return;
+        for (const id of selectedIds) {
+            try {
+                await fetch(`${backUrl}/lesson/${id}`, {
+                    method: "DELETE"
+                });
+                fillTable()
+            } catch (err) {
+                console.error(`Error al borrar la lección ${id}:`, err);
+            }
+        }
+    };
+
+    const resetAllComponents = () => {
+        resetAllFilesInput();
+        resetAllInputs();
+        resetAllTextareas();
+
+    }
+
+    const resetAllTextareas = () => {
+        textareaJson.value = "";
+        textareaUpdate.value = "";
+    }
+
+    const resetAllInputs = () => {
+        instituteSelect.value = ""
+        setGradesOptionsByInstitute()
+        typeSelect.value = "";
+    }
+
+    const resetAllFilesInput = () => {
+        fileInput.value = "";
+        fileInputUpdate.value = "";
+    }
+
+    // events
+
+    instituteSelect.addEventListener('change', setGradesOptionsByInstitute);
+    uploadLessonForm.addEventListener('submit', postLessonData);
+    document.getElementById("update-lesson-btn").addEventListener("click", updateLesson);
+    document.getElementById("delete-lessons-btn").addEventListener("click", deleteSelectedLessons);
+    setNavigation();
+</script>
+</html>
