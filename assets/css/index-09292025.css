@@ -113,8 +113,9 @@ h6 {
     content: none;
 }
 
-#title-camb{
+.title-cambridge{
     font-family: 'trajan-pro-bold';
+    color: #000000;
 }
 
 @font-face {
@@ -474,7 +475,7 @@ h6 {
     transition: all 0.3s ease;
 }
 
-.question:hover svg {
+.question:hover .question-head svg {
     scale: 1.5;
     transition: all 0.3s ease;
     background-color: rgb(from var(--secondary-color) r g b / 25%);
@@ -510,10 +511,19 @@ h6 {
     box-shadow: 0 0 16px rgba(0,0,0,0.1);
 }
 
+#success-status-form{
+    box-shadow: 0 0 16px rgba(0,0,0,0.1);
+}
+
 #contact-form input {
     border: none;
     background-color: #f5f5f5;
     border-radius: inherit;
+}
+
+#contact-form input::placeholder {
+    opacity: 1;
+    color: #bdc6cf;
 }
 
 #contact-form textarea {
@@ -522,11 +532,25 @@ h6 {
     border-radius: inherit;
 }
 
+#contact-form textarea::placeholder {
+    opacity: 1;
+    color: #bdc6cf;
+}
+
 #contact-form select {
     border: none;
     background-color: #f5f5f5;
     border-radius: inherit;
 }
+
+#contact-form select option {
+    color: #000000;
+}
+
+#contact-form select:invalid {
+    color: #bdc6cf;
+}
+
 
 #lesson-container #to-top{
     width: fit-content;

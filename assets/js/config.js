@@ -1,7 +1,7 @@
 export const backendUrl = () => {
-    return "http://localhost:3000"
+    return "https://englishboard-api.onrender.com/"
 }
 
 export const youtubeApiUrl = () => {
-    return backendUrl() + "/youtube"
+    return backendUrl() + "youtube"
 }

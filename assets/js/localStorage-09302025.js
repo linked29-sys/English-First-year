@@ -1,6 +1,6 @@
 export function saveUserSelection(module, grade) {
   try {
-    localStorage.setItem("module", module);
+    localStorage.setItem("module", JSON.stringify(module));
     localStorage.setItem("grade", JSON.stringify(grade));
   } catch (error) {
     console.error("Error saving to localStorage:", error);
@@ -8,7 +8,7 @@ export function saveUserSelection(module, grade) {
 }
 
 export function loadUserSelection() {
-  const module = localStorage.getItem("module");
+  const moduleData = localStorage.getItem("module");
   const gradeData = localStorage.getItem("grade");
 
   let grade = null;
@@ -23,10 +23,21 @@ export function loadUserSelection() {
   } else {
     console.warn("No grade found in localStorage");
   }
+
+  let module = null
+  if (moduleData) {
+    try {
+      module = JSON.parse(moduleData);
+    } catch (error) {
+      console.error("Error parsing module. It will be removed from localStorage:", error);
+      localStorage.removeItem("module");
+    }
+  } else {
+    console.warn("No module found in localStorage");
+  }
   return { module, grade };
 }
 
-// ------------------- SAVE -------------------
 export function savePhoneticVid(phoneticVid) {
   try {
     localStorage.setItem("phonetic", JSON.stringify(phoneticVid));
@@ -43,7 +54,6 @@ export function saveMaterialVid(materialVid) {
   }
 }
 
-// ------------------- LOAD -------------------
 export function loadPhoneticVid() {
   const phoneticVid = localStorage.getItem("phonetic");
   if (!phoneticVid) {

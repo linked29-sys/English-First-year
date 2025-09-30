@@ -7,7 +7,7 @@
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <!--Own styles-->
-        <link rel="stylesheet" href="./assets/css/index-09292025.css">
+        <link rel="stylesheet" href="./assets/css/index-09302025.css">
         <!--Responsive styles-->
         <link rel="stylesheet" href="./assets/css/responsive.css">
         <!--Animation styles-->
@@ -19,18 +19,11 @@
     <body>
         <main>
             <!--Section with the modules to choose-->
-            <section class="choosing container rounded-3 bg-white p-3" id="choose-module">
+            <section class="choosing container rounded-3 bg-white p-5 vh-100" id="choose-module">
                 <h2>Select your academia</h2>
-                <ul class="d-flex m-4 justify-content-center gap-5 p-0">
+                <ul class="d-flex m-4 justify-content-center gap-5 p-0" id="modules-list">
                     <!--Module list-->
-                    <li class="module p-3 rounded-3 position-relative" id="module-billinghurst">
-                        <img src="./assets/img/logos/example.webp" class="img-fluid" alt="">
-                        <h4 class="mt-3 fs-4 text-center">Instituto</h4>
-                    </li>
-                    <li class="module p-3 rounded-3 position-relative" id="module-cambridge" href="./cambridge/course.html">
-                        <img src="./assets/img/logos/cambridge-logo.png" alt="" class="img-fluid">
-                        <h4 id="title-camb" class="title-mod mt-3 fs-4 text-center text-black">Cambridge</h4>
-                    </li>
+                    
                 </ul>
             </section>
 
@@ -74,7 +67,7 @@
                             <div class="offcanvas-header">
                                 <div id="staticBackdropLabel">
                                     <h3 class="playlist-title"></h3>
-                                    <p class="mb-2"><span class="author-title"></span><span class="text-secondary"> - </span><span class="current-vid text-secondary"></span><span class="lenght-playlist text-secondary"></span></p>
+                                    <p class="mb-2"><span class="author-title"></span><span class="text-secondary"> - </span><span class="current-vid text-secondary"></span><span class="playlist-length text-secondary"></span></p>
                                 </div>
                                 <button type="button" class="btn-close d-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
@@ -140,7 +133,7 @@
                             <div class="offcanvas-header">
                                 <div id="staticBackdropLabel">
                                     <h3 class="playlist-title"></h3>
-                                    <p class="mb-2"><span class="author-title"></span><span class="text-secondary"> - </span><span class="current-vid text-secondary"></span><span class="lenght-playlist text-secondary"></span></p>
+                                    <p class="mb-2"><span class="author-title"></span><span class="text-secondary"> - </span><span class="current-vid text-secondary"></span><span class="playlist-length text-secondary"></span></p>
                                 </div>
                                 <button type="button" class="btn-close d-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
@@ -215,7 +208,7 @@
                                         </svg>
                                         <h3 class="mb-4">Do you have more questions?</h3>
                                         <p class="mb-5">Do you still have a question we didn’t answer? Any suggestions or requests? Get in touch with us. Thank you for helping us improve.</p>
-                                        <div class="to-form mt-5 button-secondary d-flex flex-row justify-content-center gap-2 align-items-center p-2">
+                                        <div class="m-auto w-fit px-4 to-form mt-5 button-secondary d-flex flex-row justify-content-center gap-2 align-items-center p-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
                                                 <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
                                             </svg>
@@ -238,7 +231,7 @@
                                             </svg>
                                             <div class="d-flex flex-column gap-2">
                                                 <span>E-mail</span>
-                                                <p>englishboard9@gmail.com</p>
+                                                <p>englishboard09@gmail.com</p>
                                             </div>
                                         </div>
                                     </div>
@@ -247,29 +240,27 @@
                                 <label for="name" class="form-label">Name</label>
                                 <input class="form-control mb-3" type="text" id="name" placeholder="Lionel Messi" name="name" required>
 
-                                <label class="form-label" for="email">Email</label>
+                                <label class="form-label" for="email">Email (Optional)</label>
                                 <input class="form-control mb-3" placeholder="lionelmessi@example.com" type="email" id="email" name="email">
 
                                 <label class="form-label" for="subject">Subject</label>
                                 <select class="form-select mb-3" id="subject" name="subject" required>
-                                    <option value="">Select...</option>
+                                    <option value="" disabled selected hidden>Select...</option>
                                     <option value="question">Question</option>
                                     <option value="suggestion">Suggestion</option>
                                     <option value="request">Request</option>
-                                    <option value="other">Other</option>
                                 </select>
-                                <input class="d-none form-control mb-3" placeholder="Place a subject" type="text" id="other-subject" name="other-subject">
 
                                 <label class="form-label" for="message">Message</label>
                                 <textarea placeholder="Type your message" class="form-control mb-3" id="message" name="message" rows="5" required></textarea>
 
                                 <div class="d-flex flex-row justify-content-between">
-                                    <div class=" w-25 button-secondary d-flex flex-row justify-content-center gap-2 align-items-center p-2" onclick="SubmitEvent" id="send-form">
+                                    <button class="border-0 w-25 button-secondary d-flex flex-row justify-content-center gap-2 align-items-center p-2" id="send-form">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-send-fill" viewBox="0 0 16 16">
                                             <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
                                         </svg>
                                         <span>Send</span>
-                                    </div>
+                                    </button>
                                     <div class="w-25 button-dark d-flex flex-row justify-content-center gap-2 align-items-center p-2" id="cancel-form">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
@@ -278,6 +269,22 @@
                                     </div>
                                 </div>
                             </form>
+                            <div class="d-none rounded-3 d-flex flex-column px-5 py-5 bg-white col-6" id="success-status-form">
+                                <div class="gap-3 d-flex flex-row justify-content-center align-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                    </svg>
+                                    <h2 class="fs-4">Email sent successfully!</h2>
+                                </div>
+                                <p class="text-center fs-5 mt-4">Thank you for reaching out. Form will reset shortly...</p>
+                                <img class="mt-5 w-50 mx-auto" src="assets/img/email-sent.png" alt="success image">
+                                <div class="m-auto mt-5 px-4 w-fit mt-5 button-primary d-flex flex-row justify-content-center gap-2 align-items-center p-2" id="return-form">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                                    </svg>
+                                    <span>Return</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -287,7 +294,93 @@
                 
             </div>
         </main>
+
+
+        <!--Templates-->
+        <template id="institute-template">
+            <li class="module p-3 rounded-3 position-relative">
+                <img class="img-fluid" alt="">
+                <h4 class="mt-3 fs-4 text-center"></h4>
+            </li>
+        </template>
+        
+        <template id="grade-template">
+            <li class="p-3">
+                <div class="grade bg-white px-3 pt-3 rounded-3">
+                    <div class="back rounded-3"></div>
+                        <div class="title-grade gap-2 mt-2 mb-2 d-flex align-items-center">
+                            <span class="rounded-3 text-white p-2 fs-4"></span>
+                            <h4></h4>
+                        </div>
+                    <p></p>
+                    <div class="grade-details d-flex flex-row gap-2 border-top pt-3">
+                        <span></span>
+                        <p>Available lessons</p>
+                    </div>
+                </div>
+            </li>
+        </template>
+
+        <template id="lesson-template">
+            <li class="class d-flex align-items-center rounded-3 p-3">
+                <div class="info-class flex-fill h-100 d-flex flex-row gap-3 p-3 rounded-3 bg-white">
+                    <i class=""></i>
+                    <div class="d-flex gap-2 flex-column">
+                        <h4 class="fs-5 m-0"></h4>
+                        <p class="text-black m-0"></p>
+                    </div>
+                </div>
+            </li>
+        </template>
+
+        <template id="playlist-item-template">
+            <li class="playlist-vid p-2">
+                <div class="vid-data d-flex flex-row">
+                    <span class="index align-self-center ps-2 pe-3 text-secondary"></span>
+                    <img>
+                    <span class="pt-2 pb-3 px-3 text-start"></span>
+                </div>
+            </li>
+        </template>
+
+        <template id="faq-template">
+            <li class="question p-3 rounded-3 bg-white">
+                <div class="question-head d-flex flex-row justify-content-between">
+                    <h4></h4>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="question-body d-none mt-2">
+                    <p></p>
+                </div>
+            </li>
+        </template>
+
+    <template id="faq-button-template">
+        <div class="m-auto w-fit px-4 to-form mt-5 button-secondary d-flex flex-row justify-content-center gap-2 align-items-center p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
+            </svg>
+            <span>Shoot a direct email</span>
+        </div>
+    </template>
+
+    <template id="plus-icon-template">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+    </template>
+
+    <template id="dash-icon-template">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
+        </svg>
+    </template>
+        
     </body>
-    <script type="module" src="./assets/js/index-09292025.js"></script>
+    <script type="module" src="./assets/js/index-09302025.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
 </html>
