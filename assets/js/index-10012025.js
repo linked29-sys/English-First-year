@@ -7,7 +7,7 @@ import {
     loadMaterialVid, 
 } from "./localStorage-09302025.js";
 import {injectJsonContentToLessonContainer} from "./jsonLessonInterpreter.js";
-import {backendUrl, youtubeApiUrl} from "./config-09302025.js";
+import {backendUrl, youtubeApiUrl} from "./config-10012025.js";
 
     const { module, grade } = loadUserSelection();
     //data
