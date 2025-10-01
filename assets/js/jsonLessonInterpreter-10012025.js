@@ -1,10 +1,11 @@
+import {backendUrl} from "./config-10012025.js";
 let jsonToInterpret = null;
 const container = document.getElementById("lesson-container");
 
 //Function to get the json to interpret
 export const setJsonToInterpret = async (idLesson) => {
     try {
-        const response = await fetch("http://localhost:3000/lesson/" + idLesson);
+        const response = await fetch(backendUrl()+"lesson/" + idLesson);
         if (!response.ok) {
             throw new Error("Error while fetching the class with id " + idLesson + ": " + response.statusText);
         }

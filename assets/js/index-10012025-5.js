@@ -6,7 +6,7 @@ import {
     loadPhoneticVid, 
     loadMaterialVid, 
 } from "./localStorage-09302025.js";
-import {injectJsonContentToLessonContainer} from "./jsonLessonInterpreter.js";
+import {injectJsonContentToLessonContainer} from "./jsonLessonInterpreter-10012025.js";
 import {backendUrl, youtubeApiUrl} from "./config-10012025.js";
 
     const { module, grade } = loadUserSelection();
@@ -60,6 +60,7 @@ const routes = {
     lessons: (button, subId) => {
         if (subId) {
           injectJsonContentToLessonContainer(subId).then(() => {
+            console.log(123)
             hideContents();
             removeElementsVisibility([dashboard]);
             setLessonButtons();
@@ -374,17 +375,17 @@ const setLessonsList = async () => {
     } 
 
     try{
-        const lessonList = document.getElementById("lessons-list");
-        clearContainer(container);
-
+        
         const lessons = await getLessons();
-
+        
         if (appState.error.lesson){
+            
             throw new Error("the lessons could not be obtained: "+ appState.error.lesson)
         }
-
         hideSpinner(container, containerHTML);
 
+        const lessonList = document.getElementById("lessons-list");
+        clearContainer(lessonList);
 
         const template = document.getElementById("lesson-template");
         if (!template) {
@@ -392,7 +393,9 @@ const setLessonsList = async () => {
             return;
         }
 
+        
         lessons.forEach((lesson) => {
+            
             const clone = template.content.cloneNode(true);
 
             const li = clone.querySelector("li");
@@ -406,10 +409,10 @@ const setLessonsList = async () => {
 
             const desc = clone.querySelector("p");
             desc.textContent = lesson.shortDescription;
-
+            
             lessonList.appendChild(clone);
-
-            const insertedLi = container.lastElementChild;
+            const insertedLi = lessonList.lastElementChild;
+            
             setLessonNavigation(insertedLi, lesson._id);
         });
     }
