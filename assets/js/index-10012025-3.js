@@ -221,7 +221,7 @@ const setModules = async () => {
             li.id = `module-${institute.name.toLowerCase()}`;
 
             const img = clone.querySelector("img");
-            img.src = `./assets/img/logos/${institute.name}-logo.png`;
+            img.src = `./assets/img/logos/${institute.name.toLowerCase()}-logo.png`;
             img.alt = `${institute.name}-logo`;
 
             const h4 = clone.querySelector("h4");
