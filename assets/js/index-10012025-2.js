@@ -150,12 +150,29 @@ const fetchJsonWithError = async (url, context = "fetch") => {
   }
 };
 
-const wakeServer = async () => {
-  try {
-    await fetch(`${backendUrl()}health`, { cache: "no-store" });
-  } catch (err) {
-    console.warn("Backend wake failed:", err);
+const wakeServer = async (maxAttempts = 5, baseDelay = 3000) => {
+  let attempt = 0;
+
+  while (attempt < maxAttempts) {
+    attempt++;
+    try {
+      const response = await fetch(`${backendUrl()}/health`, { cache: "no-store" });
+
+      if (response.ok) {
+        console.log(`Backend awake after ${attempt} attempt(s)`);
+        return true;
+      }
+    } catch (err) {
+      console.warn(`Wake attempt ${attempt} failed:`, err);
+    }
+
+    const delay = baseDelay * attempt;
+    console.log(`⏳ Retrying in ${delay / 1000} seconds...`);
+    await new Promise(resolve => setTimeout(resolve, delay));
   }
+
+  console.error("Backend did not wake up after maximum attempts");
+  return false;
 };
 
 const showSpinner = (message, container) => {
@@ -1069,10 +1086,14 @@ const showErrorScreen = (section, errorType) => {
         errorCode = "Empty";
         addButton = false;
         break;
+    case "api-out":
+        message = "There's no content available at the moment. Talk to your teacher or wait for something to be uploaded.";
+        errorCode = "Api are sleeping";
+        addButton = true;
+        break;
     case "404":
-        message = "The requested resource could not be found. Please check again later.";
+        message = "The API is suspended and could not be woken up, please try again.";
         errorCode = "Not Found";
-        addButton = false;
         break;
     case "401":
         message = "You are not authorized to access this content. Please log in and try again.";
@@ -1388,8 +1409,13 @@ const initApp = async () => {
     const container = document.getElementById("choose-module");
     const spinnerBackup = showSpinner("Waking up server, please wait...", container);
 
-    await wakeServer();
+    const awake = await wakeServer(5, 3000); // 5 intentos, delay base 3s
     hideSpinner(container, spinnerBackup)
+
+    if (!awake) {
+    showErrorScreen("choose-module", "api-out");
+        return;
+    }
 
     setModules();
     loadDashboard();          
