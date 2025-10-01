@@ -29,15 +29,22 @@ const appState = {
     phonetic: null,
   },
   loaded: {
+    institutes: false,
     lessons: false,
     faq: false,
-    phonetics: false,
+    phonetic: false,
     material: false,
   },
   arrays: {
     buttons: [],
     phonetics: [],
     material: [],
+  },
+  error: {
+    institute: null,
+    lesson: null,
+    material: null,
+    phonetic: null,
   },
 };
 
@@ -65,15 +72,13 @@ const routes = {
             setLessonsList().then(() => { appState.loaded.lessons = true; });
         }
     },
-
-
     material: async (button) => {
         prepareSection("material", button);
 
         if (!appState.loaded.material) {
             const pid = appState.selected.grade?.playlistId;
             if (!pid) { 
-                showErrorScreen("material", "empty"); 
+                showErrorScreen("content-material", "empty"); 
                 return; 
             }
 
@@ -88,24 +93,23 @@ const routes = {
             loadVideo("material");
         }
     },
-
-    phonetics: (button) => {
+    phonetics: async (button) => {
         prepareSection("phonetics", button);
-        if (!appState.loaded.phonetics) {
+        if (!appState.loaded.phonetic) {
             //const pid = appState.selected.grade?.phoneticsPlaylistId; lo dejo asi porque todavia no defini la phonetica para los grados
             const pid = "PLpLaqjI39e1-wZOrixiNRoU6W89RqFj4k"
-            if (!pid) { showErrorScreen("phonetics", "empty"); return; }
+            if (!pid) { showErrorScreen("content-phonetics", "empty"); return; }
 
-            setPlaylist("phonetics", pid).then(() => {
-              loadVideo("phonetics");
-              appState.loaded.phonetics = true;
-            });
+            const firstVid = await setPlaylist("phonetics", pid); 
+            if (firstVid) {
+                loadVideo("phonetics");
+            }
+            appState.loaded.phonetic = true;
             setTrigger("phonetics");
         } else {
             loadVideo("phonetics");
         }
     },
-
     faq: (button) => {
         prepareSection("faq", button);
         if (!appState.loaded.faq) {
@@ -131,45 +135,114 @@ const fetchJson = async (url, context = "fetch") => {
     }
 }
 
-    
+const fetchJsonWithError = async (url, context = "fetch") => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      console.error(`${context} failed: ${response.status} ${response.statusText}`);
+      return { data: null, error: response.status.toString() };
+    }
+    const data = await response.json();
+    return { data, error: null };
+  } catch (error) {
+    console.error(`${context} error:`, error);
+    return { data: null, error: "network" };
+  }
+};
+
+const wakeServer = async () => {
+  try {
+    await fetch(`${backendUrl()}health`, { cache: "no-store" });
+  } catch (err) {
+    console.warn("Backend wake failed:", err);
+  }
+};
+
+const showSpinner = (message, container) => {
+    const containerHTML = container.innerHTML
+    container.classList.add("overflow-hidden")
+    clearContainer(container);
+
+    const template = document.getElementById("spinner-template");
+    const clone = template.content.cloneNode(true);
+
+    clone.querySelector("h3").textContent = message;
+
+    container.appendChild(clone);
+
+    return containerHTML;
+};
+
+const hideSpinner = (container, containerHTML) => {
+    clearContainer(container);
+    container.classList.remove("overflow-hidden")
+    container.innerHTML = containerHTML;
+};
+  
 const setModules = async () => {
-    const container = document.getElementById("modules-list");
-    clearContainer("modules-list");
-    const institutes = await getModules();
+    const container = document.getElementById("choose-module")
+    const containerHTML = showSpinner("Loading institutes, please wait...", container);
+    
+    try{
+        const institutes = await getModules();
 
-    const template = document.getElementById("institute-template");
+        if (appState.error.institute) {
+            throw new Error("the institutes could not be obtained: "+ appState.error.institute)
+        }
 
-    institutes.forEach(institute => {
-        const clone = template.content.cloneNode(true);
+        hideSpinner(container, containerHTML);
 
-        const li = clone.querySelector("li");
-        li.id = `module-${institute.name.toLowerCase()}`;
+        const moduleList = document.getElementById("modules-list");
+        clearContainer(moduleList);
 
-        const img = clone.querySelector("img");
-        img.src = `./assets/img/logos/${institute.name}-logo.png`;
-        img.alt = `${institute.name}-logo`;
+        const template = document.getElementById("institute-template");
 
-        const h4 = clone.querySelector("h4");
-        h4.textContent = institute.name;
-        h4.classList.add(`title-${institute.name.toLowerCase()}`);
+        institutes.forEach(institute => {
+            const clone = template.content.cloneNode(true);
 
-        container.appendChild(clone);
+            const li = clone.querySelector("li");
+            li.id = `module-${institute.name.toLowerCase()}`;
 
-        setModuleNavigation(li, institute);
-    });
+            const img = clone.querySelector("img");
+            img.src = `./assets/img/logos/${institute.name}-logo.png`;
+            img.alt = `${institute.name}-logo`;
+
+            const h4 = clone.querySelector("h4");
+            h4.textContent = institute.name;
+            h4.classList.add(`title-${institute.name.toLowerCase()}`);
+
+            moduleList.appendChild(clone);
+
+            setModuleNavigation(li, institute);
+        });
+        appState.loaded.institutes = true
+    } catch (err) {
+        hideSpinner(container, "");
+        showErrorScreen("choose-module", appState.error.institute)
+    }
 };
 
 
-const clearContainer = (id) => {
-    const container = document.getElementById(id);
+const clearContainer = (container) => {
     if (container) container.innerHTML = "";
 };
 
 //Function to get all modules
 const getModules = async () => {
     if (!cache.modules) {
-        cache.modules = await fetchJson(backendUrl() + "institute", "getModules");
+        const { data, error } = await fetchJsonWithError(
+            backendUrl() + "institute",
+            "getModules"
+        );
+      
+        if (error) {
+            appState.error.institute = error;
+            return [];
+        }
+      
+        cache.modules = data;
     }
+
     return cache.modules || [];
 };
 
@@ -177,7 +250,6 @@ const getModules = async () => {
 const setModuleNavigation = (item, module) => {
     item.addEventListener("click", (e) => {
         appState.selected.module = module;
-        console.log(module)
         showSelectedGrades(e);
     });
 };
@@ -214,7 +286,7 @@ const addElementsVisibility = (array) => {
 //Function to charge grade's list with available grades
 const setGradesList = () => {
     const container = document.getElementById("grades-list");
-    clearContainer("grades-list");
+    clearContainer(container);
     const grades = appState.selected.module.grades;
 
     const template = document.getElementById("grade-template");
@@ -275,60 +347,75 @@ const showDashboard = (e) => {
 
 //Function to charge lessons' list with available lessons
 const setLessonsList = async () => {
-    const container = document.getElementById("lessons-list");
-    clearContainer("lessons-list");
-    const lessons = await getLessons();
-    if (!lessons) return;
+    const container = document.getElementById("content-lessons")
+    const containerHTML = showSpinner("Loading lessons, please wait...", container);
 
-    const template = document.getElementById("lesson-template");
-    if (!template) {
-        console.error("Template 'lesson-template' no encontrado en el DOM");
+    if (appState.selected.grade.lessonCount < 1) {
+        hideSpinner(container, containerHTML);
+        showErrorScreen("content-lessons", "empty")
         return;
+    } 
+
+    try{
+        const lessonList = document.getElementById("lessons-list");
+        clearContainer(container);
+
+        const lessons = await getLessons();
+
+        if (appState.error.lesson){
+            throw new Error("the lessons could not be obtained: "+ appState.error.lesson)
+        }
+
+        hideSpinner(container, containerHTML);
+
+
+        const template = document.getElementById("lesson-template");
+        if (!template) {
+            console.error("Template 'lesson-template' no encontrado en el DOM");
+            return;
+        }
+
+        lessons.forEach((lesson) => {
+            const clone = template.content.cloneNode(true);
+
+            const li = clone.querySelector("li");
+            li.id = `lesson-${lesson.title.toLowerCase()}`;
+
+            const icon = clone.querySelector("i");
+            icon.className = `fi ${typeOfClassIcon(lesson.type)}`;
+
+            const title = clone.querySelector("h4");
+            title.textContent = lesson.title;
+
+            const desc = clone.querySelector("p");
+            desc.textContent = lesson.shortDescription;
+
+            lessonList.appendChild(clone);
+
+            const insertedLi = container.lastElementChild;
+            setLessonNavigation(insertedLi, lesson._id);
+        });
     }
-
-    lessons.forEach((lesson) => {
-        const clone = template.content.cloneNode(true);
-
-        const li = clone.querySelector("li");
-        li.id = `lesson-${lesson.title.toLowerCase()}`;
-
-        const icon = clone.querySelector("i");
-        icon.className = `fi ${typeOfClassIcon(lesson.type)}`;
-
-        const title = clone.querySelector("h4");
-        title.textContent = lesson.title;
-
-        const desc = clone.querySelector("p");
-        desc.textContent = lesson.shortDescription;
-
-        container.appendChild(clone);
-
-        const insertedLi = container.lastElementChild;
-        setLessonNavigation(insertedLi, lesson._id);
-    });
+    catch {
+        hideSpinner(container, "");
+        showErrorScreen("content-lessons", appState.error.lesson)
+    }
 };
-
 
 //Function to get lessons of a selected grade
 const getLessons = async () => {
-    try{
-        const response = await fetch(backendUrl() + "lesson/grade/" + appState.selected.grade.id); 
-            if (!response.ok) {
-                showErrorScreen("lessons", response.status.toString());
-                return [];
-            }
-        const data = await response.json();
-        if (!data || data.length === 0) {
-            showErrorScreen("lessons", "empty");
-        }
-        return data;
-    }
-    catch (error) {
-        console.error("Network or fetch error:", error);
-        showErrorScreen("lessons", "network");
+    const { data, error } = await fetchJsonWithError(
+        backendUrl() + "lesson/grade/" + appState.selected.grade.id,
+        "getLessons"
+    );
+
+    if (error) {
+        appState.error.lesson = error; // guardamos el error en appState
         return [];
     }
-}
+
+    return data || [];
+};
 
 //Function to get the lesson icon with the lesson type.
 const typeOfClassIcon = (typeOfLesson) => {
@@ -388,7 +475,6 @@ const fillDashboardGradeData = () => {
     gradeType.textContent = typeLabel;
 };
 
-
 //Function to add their events to the nav buttons
 const setDashboardNavButtons = async () => {
     await addButons();
@@ -418,7 +504,6 @@ const addButons = async () => {
     });
     return true;
 };
-
 
 //Function to get buttons from data/json
 const getButtons = async () => {
@@ -506,81 +591,113 @@ const showSelectedDashboardContent = (contentId) => {
 }
 
 const setPlaylist = async (contentId, playlistId) => {
-    let firstVid = null;
-    const playlistContainer = document.getElementById(`${contentId}-vids`);
-    clearContainer(`${contentId}-vids`);
+    const container = document.getElementById("content-" + contentId)
+    const containerHTML = showSpinner("Loading playlist, please wait...", container);
+    try{
+        const playlist = await getPlaylistVideos(playlistId, contentId);
 
-    const playlist = await getPlaylistVideos(playlistId, contentId);
-    const videos = Array.isArray(playlist?.videos) ? playlist.videos : [];
+        if(getPlaylistErrorByContentId(contentId)){
+            throw new Error("Could not get playlist: ", getPlaylistErrorByContentId(contentId))
+        }
 
-    switch (contentId) {
-      case "phonetics":
-        appState.arrays.phonetics = sortVideosByUnit(videos, contentId);
-        break;
-      case "material":
-        appState.arrays.material = videos;
-        break;
-    }
-
-    if (playlist.playlist?.author) {
-      setPlaylistAuthor(playlist.playlist.author, contentId);
-    }
-
-    const template = document.getElementById("playlist-item-template");
-    if (!template) {
-      console.error("Template 'playlist-item-template' no encontrado en el DOM");
-      return null;
-    }
-
-    videos.forEach((vid, index) => {
-        const vidId = vid.snippet?.resourceId?.videoId;
-        if (!vidId) return;
-
-        if (index === 0) firstVid = vid;
-
-        const title = vid.snippet.title;
-        const thumb =
-            vid.snippet.thumbnails.maxres?.url ||
-            vid.snippet.thumbnails.high?.url ||
-            vid.snippet.thumbnails.medium?.url ||
-            vid.snippet.thumbnails.default?.url || "";
+        hideSpinner(container, containerHTML)   
         
-        const clone = template.content.cloneNode(true);
+        let firstVid = null;
+        const playlistContainer = document.getElementById(`${contentId}-vids`);
+        clearContainer(playlistContainer);
+        
+        const videos = Array.isArray(playlist?.videos) ? playlist.videos : [];
+        
+        //simplificar en subtarea
+        switch (contentId) {
+          case "phonetics":
+            appState.arrays.phonetics = sortVideosByUnit(videos, contentId);
+            break;
+          case "material":
+            appState.arrays.material = videos;
+            break;
+        }
+        
+        if (playlist.playlist?.author) {
+          setPlaylistAuthor(playlist.playlist.author, contentId);
+        }
+        
 
-        const li = clone.querySelector("li");
-        li.classList.add(`${contentId}-vid`);
-        li.id = vidId;
-        li.dataset.index = `${contentId}-${index + 1}`;
+        const template = document.getElementById("playlist-item-template");
+        if (!template) {
+          console.error("Template 'playlist-item-template' no encontrado en el DOM");
+          return null;
+        }
 
-        const indexEl = clone.querySelector(".index");
-        indexEl.textContent = index + 1;
+        
+        videos.forEach((vid, index) => {
+            const vidId = vid.snippet?.resourceId?.videoId;
+            if (!vidId) return;
 
-        const img = clone.querySelector("img");
-        img.src = thumb;
-        img.alt = title;
+            if (index === 0) firstVid = vid;
 
-        const span = clone.querySelector(".vid-data span:last-child");
-        span.textContent = title;
+            const title = vid.snippet.title;
+            const thumb =
+                vid.snippet.thumbnails.maxres?.url ||
+                vid.snippet.thumbnails.high?.url ||
+                vid.snippet.thumbnails.medium?.url ||
+                vid.snippet.thumbnails.default?.url || "";
 
-        playlistContainer.appendChild(clone);
+            const clone = template.content.cloneNode(true);
 
-        const insertedLi = playlistContainer.lastElementChild;
-        insertedLi.addEventListener("click", () => {
-            selectVideo(vid, contentId);
+            
+
+            const li = clone.querySelector("li");
+            li.classList.add(`${contentId}-vid`);
+            li.id = vidId;
+            li.dataset.index = `${contentId}-${index + 1}`;
+
+            const indexEl = clone.querySelector(".index");
+            indexEl.textContent = index + 1;
+            
+
+            const img = clone.querySelector("img");
+            img.src = thumb;
+            img.alt = title;
+
+            const span = clone.querySelector(".vid-data span:last-child");
+            span.textContent = title;
+            
+            playlistContainer.appendChild(clone);
+
+            const insertedLi = playlistContainer.lastElementChild;
+            insertedLi.addEventListener("click", () => {
+                selectVideo(vid, contentId);
+            });
         });
-    });
 
-    setPlaylistOffcanvaData(
-        contentId,
-        videos.length,
-        playlist.playlist.title,
-        playlist.playlist.author?.channelTitle || ""
-    );
+        setPlaylistOffcanvaData(
+            contentId,
+            videos.length,
+            playlist.playlist.title,
+            playlist.playlist.author?.channelTitle || ""
+        );
+        
 
-    setVideo(contentId, firstVid);
+        setVideo(contentId, firstVid);
 
-    return firstVid;
+        return firstVid;
+
+    }
+    catch (err) {
+        hideSpinner(container, containerHTML)
+        showErrorScreen("content-" + contentId, getPlaylistErrorByContentId(contentId))
+    }
 };
+
+const getPlaylistErrorByContentId = (contentId) => {
+    switch (contentId) {
+        case "phonetics":
+            return appState.error.phonetic;
+        case "material":
+            return appState.error.material;
+    }
+} 
 
 const setVideo = (contentId, firstVid) => {
     switch (contentId) {
@@ -640,19 +757,29 @@ const setPlaylistOffcanvaData = (contentId, playlistLength, playlistTitle, autho
 
 
 const getPlaylistVideos = async (playlistId, contentId) => {
-    if (cache.playlists[playlistId]) {
-        return cache.playlists[playlistId];
+  if (cache.playlists[playlistId]) {
+    return cache.playlists[playlistId];
+  }
+
+  const { data, error } = await fetchJsonWithError(
+    youtubeApiUrl() + `/playlist/${playlistId}`,
+    "getPlaylistVideos"
+  );
+
+  if (error) {
+    switch (contentId){
+        case "phonetics":
+            appState.error.phonetic = { [contentId]: error };
+            break;
+        case "material":
+            appState.error.material = { [contentId]: error };
+            break;
     }
+    return [];
+  }
 
-    const data = await fetchJson(youtubeApiUrl() + `/playlist/${playlistId}`, "getPlaylistVideos");
-
-    if (!data || data.error) {
-        showErrorScreen(contentId, data?.status?.toString() || "network");
-        return [];
-    }
-
-    cache.playlists[playlistId] = data;
-    return data;
+  cache.playlists[playlistId] = data;
+  return data || [];
 };
 
 const sortVideosByUnit = (videos, contentId) => {
@@ -676,21 +803,19 @@ const sortVideosByUnit = (videos, contentId) => {
     });
 };
 
-    const setTrigger = (contentId) => {
-        const trigger = document.getElementById(contentId + "-trigger");
-        const offcanvasEl = document.querySelector("." + contentId + "-offcanva");
-        const bsOffcanvas = new bootstrap.Offcanvas(offcanvasEl);
+const setTrigger = (contentId) => {
+    const trigger = document.getElementById(contentId + "-trigger");
+    const offcanvasEl = document.querySelector("." + contentId + "-offcanva");
+    const bsOffcanvas = new bootstrap.Offcanvas(offcanvasEl);
 
-        // Abrir cuando el mouse entra en la zona
-        trigger.addEventListener("mouseenter", () => {
-            bsOffcanvas.show();
-        });
+    trigger.addEventListener("mouseenter", () => {
+        bsOffcanvas.show();
+    });
 
-        // Opcional: cerrar cuando se sale del panel
-        offcanvasEl.addEventListener("mouseleave", () => {
-            bsOffcanvas.hide();
-        });
-    }
+    offcanvasEl.addEventListener("mouseleave", () => {
+        bsOffcanvas.hide();
+    });
+}
 
     const getAllcontentContainers = () => {
         return document.querySelectorAll(".dashboard-content")
@@ -926,7 +1051,8 @@ const handleHash = () => {
 };
 
 const showErrorScreen = (section, errorType) => {
-    const container = document.getElementById("content-" + section);
+    const container = document.getElementById(section);
+    container.classList.add("overflow-hidden")
     container.innerHTML = "";
 
     let message = "";
@@ -934,23 +1060,44 @@ const showErrorScreen = (section, errorType) => {
     let addButton = true;
 
     switch (errorType) {
-        case "network":
-            message = "You seem to have a connection error. Please try again in a few minutes.";
-            errorCode = "Network error";
-            break;
-        case "empty":
-            message = "There's no content available at the moment. Talk to your teacher or wait for something to be uploaded.";
-            errorCode = "Empty";
-            addButton = false;
-            break;
-        case "429":
-            message = "It looks like you've made a lot of requests. Please try again in a few minutes.";
-            errorCode = "Too many requests";
-            break;
-        default:
-            message = "An unexpected error occurred. Please try again later.";
-            errorCode = "Error";
-    }   
+    case "network":
+        message = "You seem to have a connection error. Please try again in a few minutes.";
+        errorCode = "Network error";
+        break;
+    case "empty":
+        message = "There's no content available at the moment. Talk to your teacher or wait for something to be uploaded.";
+        errorCode = "Empty";
+        addButton = false;
+        break;
+    case "404":
+        message = "The requested resource could not be found. Please check again later.";
+        errorCode = "Not Found";
+        addButton = false;
+        break;
+    case "401":
+        message = "You are not authorized to access this content. Please log in and try again.";
+        errorCode = "Unauthorized";
+        break;
+    case "403":
+        message = "You don’t have permission to access this section.";
+        errorCode = "Forbidden";
+        break;
+    case "500":
+        message = "The server encountered an error. Please try again later.";
+        errorCode = "Server error";
+        break;
+    case "503":
+        message = "The service is temporarily unavailable. Please try again later.";
+        errorCode = "Service unavailable";
+        break;
+    case "429":
+        message = "It looks like you've made a lot of requests. Please try again in a few minutes.";
+        errorCode = "Too many requests";
+        break;
+    default:
+        message = "An unexpected error occurred. Please try again later.";
+        errorCode = "Error";
+}
 
     const row = document.createElement("div");
     row.classList.add("row", "bg-white", "align-items-center", "vh-100", "overflow-hidden");
@@ -1238,6 +1385,12 @@ const clearContactInputs = () => {
 
 //Initial state
 const initApp = async () => {
+    const container = document.getElementById("choose-module");
+    const spinnerBackup = showSpinner("Waking up server, please wait...", container);
+
+    await wakeServer();
+    hideSpinner(container, spinnerBackup)
+
     setModules();
     loadDashboard();          
     await setDashboardNavButtons();  
