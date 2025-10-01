@@ -156,7 +156,7 @@ const wakeServer = async (maxAttempts = 5, baseDelay = 3000) => {
   while (attempt < maxAttempts) {
     attempt++;
     try {
-      const response = await fetch(`${backendUrl()}/health`, { cache: "no-store" });
+      const response = await fetch(`${backendUrl()}health`, { cache: "no-store" });
 
       if (response.ok) {
         console.log(`Backend awake after ${attempt} attempt(s)`);
